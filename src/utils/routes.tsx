@@ -9,6 +9,7 @@ export const ROUTES = Object.freeze({
   COUPONS: "/coupons",
   TICKETS: "/tickets",
   PRODUCTS: "/products",
+  CREATE_PRODUCT: "/products/create",
 });
 
 export const navRoutes = [

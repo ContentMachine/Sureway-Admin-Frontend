@@ -1,9 +1,8 @@
-import { routes } from "@/utilities/routes";
-import Link from "../../../node_modules/next/link";
 import React from "react";
-import logo from "../../assets/images/logo.png";
-import Image from "../../../node_modules/next/image";
+import Link from "next/link";
 import classes from "./Logo.module.css";
+import { ROUTES } from "@/utils/routes";
+import Image from "next/image";
 
 type LogoTypes = {
   className?: string;
@@ -11,8 +10,13 @@ type LogoTypes = {
 
 const Logo = ({ className }: LogoTypes) => {
   return (
-    <Link href={routes.BASE_URL} className={`${classes.logo} ${className}`}>
-      <Image src={logo} alt="Insure All The Way Logo" />
+    <Link href={ROUTES.BASE} className={`${classes.logo} ${className}`}>
+      <Image
+        src="/logo.svg"
+        alt="Insure All The Way Logo"
+        width={166}
+        height={48}
+      />
     </Link>
   );
 };

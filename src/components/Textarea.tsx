@@ -3,10 +3,9 @@
 import { Dispatch, SetStateAction, useState } from "react";
 import { Loader } from "lucide-react";
 
-type InputProps = {
-  type?: string;
+type TextAreaProps = {
   label?: string;
-  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange?: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
   onBlur?: () => void;
   value?: string;
   isRequired?: boolean;
@@ -20,15 +19,14 @@ type InputProps = {
   readOnly?: boolean;
   state?: string;
   setState?: Dispatch<SetStateAction<string>>;
-  onKeyup?: (event: React.KeyboardEvent<HTMLInputElement>) => void;
+  onKeyup?: (event: React.KeyboardEvent<HTMLTextAreaElement>) => void;
   onFocus?: () => void;
   min?: number | string | any;
   max?: number | string | any;
   loading?: boolean;
 };
 
-const Input = ({
-  type,
+const TextArea = ({
   label,
   onChange,
   onBlur,
@@ -47,7 +45,7 @@ const Input = ({
   min,
   max,
   loading,
-}: InputProps) => {
+}: TextAreaProps) => {
   // States
   const [invalid, setInvalid] = useState(false);
 
@@ -70,8 +68,7 @@ const Input = ({
         </>
       )}
       <span className="relative block my-1">
-        <input
-          type={type || "text"}
+        <textarea
           name={name}
           placeholder={placeholder}
           id={label}
@@ -95,14 +92,12 @@ const Input = ({
             }
           }}
           value={value}
-          className={`block w-full p-3 font-sans text-base my-1 rounded-md transition-all duration-200 ease-in-out border-1 border-black bg-transparent text-black placeholder:font-medium placeholder:text-base placeholder:gray-600 outline-none focus:border-1 focus:border-yellow-100"  ${
+          className={`block w-full p-3 font-sans text-base my-1 rounded-md transition-all duration-200 ease-in-out border-1 border-black bg-transparent text-black placeholder:font-medium placeholder:text-base placeholder:gray-600 outline-none focus:border-1 focus:border-yellow-100 min-h-25 resize-none"  ${
             invalid
               ? "border-1 border-red-400 text-red-400"
               : "border-1 border-gray-600"
           }`}
           onKeyUp={onKeyup}
-          min={min}
-          max={max}
         />
         {loading && (
           <Loader size="1rem" color="inherit" style={{ color: "#a7c7e7" }} />
@@ -122,4 +117,4 @@ const Input = ({
   );
 };
 
-export default Input;
+export default TextArea;

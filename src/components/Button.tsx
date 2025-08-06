@@ -36,14 +36,14 @@ const Button = ({
   return (
     <button
       className={cn(
-        `flex px-8 py-4 items-center justify-center gap-2.5 font-sans text-base font-semibold text-center select-none cursor-pointer whitespace-nowrap transition-all ease-in-out duration-200 box-shadow rounded-md hover:opacity-80  ${
+        `flex px-8 py-3 items-center justify-center gap-2.5 font-sans text-base font-semibold text-center select-none cursor-pointer whitespace-nowrap transition-all ease-in-out duration-200 box-shadow rounded-md hover:opacity-80  ${
           type === "secondary"
             ? "bg-yellow-100 border-1 border-yellow-100 text-black active:text-white"
             : type === "tertiary"
-            ? "bg-white text-black border-none"
+            ? "bg-white text-blue-200 border-none"
             : type === "null"
             ? "bg-transparent text-blue-200 border-none"
-            : "bg-blue-200 border-none text-black"
+            : "bg-blue-200 border-none text-white"
         } ${className}`
       )}
       onClick={onClick}

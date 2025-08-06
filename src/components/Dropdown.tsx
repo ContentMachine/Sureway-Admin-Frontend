@@ -1,9 +1,7 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
-import classes from "./Dropdown.module.css";
-import Loader from "../Loader/Loader";
-import { CircularProgress } from "@mui/material";
+import { Loader2 } from "lucide-react";
 
 export type DropdownProps = {
   title?: string | React.ReactNode;
@@ -78,22 +76,32 @@ const Dropdown = (props: DropdownProps) => {
   }, [props.selected, props.isRequired]);
 
   return (
-    <div className={classes.container}>
+    <div className="min-w-50">
       {props?.label && (
-        <label htmlFor={props.label} className={classes.label}>
-          {props.label} {props.isRequired && <span>*</span>}
+        <label
+          htmlFor={props.label}
+          className="font-sans text-black text-main font-medium"
+        >
+          {props.label}{" "}
+          {props.isRequired && (
+            <span className="text-red-400 font-sans text-md font-medium">
+              *
+            </span>
+          )}
         </label>
       )}
 
       <div
-        className={`${classes.dropdown} ${
-          invalid ? classes.invalid : classes.valid
-        } ${isActive ? classes.active : classes.inActive}`}
+        className={`relative select-none rounded-md w-full h-12.5 p-4 my-1  transition-all duration-200 ease-in-out bg-transparent text-black  ${
+          invalid ? "border-1 border-red-400" : "border-1 border-gray-600"
+        } ${
+          isActive ? "border-1 border-yellow-100" : "border-1 border-gray-600"
+        }`}
         ref={dropdownRef}
       >
         <div
           // tabIndex={0}
-          className={classes.dropdownButton}
+          className="h-full flex items-center justify-between text-black font-sans text-base cursor-pointer transition-all ease-in-out duration-200"
           onClick={() => {
             setIsActive(!isActive);
             if (props.onOpen) {
@@ -123,7 +131,7 @@ const Dropdown = (props: DropdownProps) => {
         >
           {props?.selected ||
             props?.title ||
-            `Select ${props.label?.toLowerCase()}`}
+            `Select ${props.label?.toLowerCase() || "an option"}`}
           <svg
             width="16"
             height="16"
@@ -135,6 +143,7 @@ const Dropdown = (props: DropdownProps) => {
                 ? { transform: "rotate(-90deg)" }
                 : { transform: "rotate(0deg)" }
             }
+            className="w-4 h-4 cursor-pointer transition-all ease-in-out duration-200 "
           >
             <path
               d="M4 6L8 10L12 6"
@@ -147,11 +156,11 @@ const Dropdown = (props: DropdownProps) => {
         </div>
         {isActive && (
           <div
-            className={classes.dropdownContent}
+            className="absolute w-full top-[110%] left-0 box-border z-[2] bg-white min-h-full max-h-[35opx] overflow-y-auto text-left border-none transition-all ease-in-out duration-200 box-shadow2 rounded-md "
             style={{ maxHeight: props.maxHeight || undefined }}
           >
             {props.options && props.options?.length > 8 && (
-              <div className={classes.inputSection}>
+              <div className="h-15 p-2 sticky top-0 bg-white z-[1]">
                 <input
                   type="text"
                   placeholder="Search"
@@ -160,6 +169,7 @@ const Dropdown = (props: DropdownProps) => {
                     setKEyPressedValue(e.target.value);
                   }}
                   ref={searchInput}
+                  className="w-full h-full rounded-md text-black font-sans text-xs font-medium"
                 />
               </div>
             )}
@@ -176,7 +186,7 @@ const Dropdown = (props: DropdownProps) => {
                   return (
                     <div
                       key={i}
-                      className={classes.dropdownItem}
+                      className="py-2.5 px-5 cursor-pointer transition-all ease-in-out duration-200 relative text-black font-sans text-md font-medium w-full hover:bg-gray-100"
                       onClick={() => {
                         if (props.setSelected) props?.setSelected(option);
                         setIsActive(false);
@@ -190,21 +200,21 @@ const Dropdown = (props: DropdownProps) => {
             ) : !props.isLoading &&
               props.options &&
               props.options.length === 0 ? (
-              <p className={`${classes.dropdownItem2}`}>No matching Items</p>
+              <p
+                className={`py-2 px-4 cursor-pointer transition-all ease-in-out duration-200 text-black font-sans text-md font-medium`}
+              >
+                No matching Items
+              </p>
             ) : (
-              <div className={classes.loadingContainer}>
-                <CircularProgress
-                  size="2rem"
-                  color="inherit"
-                  style={{ color: "#e5c300" }}
-                />
+              <div className="w-full h-full min-h-50 flex items-center justify-center">
+                <Loader2 className="spinner" />
               </div>
             )}
           </div>
         )}
       </div>
       {invalid && (
-        <div className={classes.errorMessage}>
+        <div className="text-black font-sans text-sm font-medium">
           {props.errorMessage || "Please choose an option to continue"}
         </div>
       )}
