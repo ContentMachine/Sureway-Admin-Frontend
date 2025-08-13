@@ -2,8 +2,13 @@
 
 import Input from "@/components/Input";
 import Button from "@/components/Button";
+import { useRouter } from "next/navigation";
+import { ROUTES } from "@/utils/routes";
 
 const SignIn = () => {
+  // Router
+  const router = useRouter();
+
   return (
     <section className="flex items-center justify-center h-screen ">
       <form className="w-[540px] px-15 py-12 box-shadow2 bg-white rounded-md">
@@ -14,7 +19,13 @@ const SignIn = () => {
           Sign in securely to check your devices and give you full remote
           control.
         </p>
-        <Input label="Email" isRequired name="email" type="email" />
+        <Input
+          label="Email"
+          isRequired
+          name="email"
+          type="email"
+          className="mb-4"
+        />
         <Input
           label="Password"
           type="password"
@@ -26,6 +37,7 @@ const SignIn = () => {
         <Button
           onClick={(e) => {
             e.preventDefault();
+            router.replace(ROUTES.DASHBOARD);
           }}
           className="mt-8 w-full text-white"
         >

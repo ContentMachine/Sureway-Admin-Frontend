@@ -64,7 +64,7 @@ const FileUploadInput = ({
 
   return (
     <div>
-      <p className="font-sans text-black text-main font-medium">{title}</p>
+      <p className="font-sans text-black text-main font-medium mb-1">{title}</p>
       <div
         className="flex gap-1 flex-col items-center py-6 px-4 rounded-md border-1 border-gray-600"
         onDragOver={handleDragOver}

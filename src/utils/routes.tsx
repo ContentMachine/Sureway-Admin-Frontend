@@ -1,15 +1,23 @@
-import { ChartBarStacked, House, Star, Tag, Ticket } from "lucide-react";
+import {
+  ChartBarStacked,
+  House,
+  ShoppingBag,
+  Star,
+  Tag,
+  Ticket,
+} from "lucide-react";
 
 export const ROUTES = Object.freeze({
   BASE: "/",
   DASHBOARD: "/dashboard",
   SIGN_IN: "/sign-in",
-  ORDER: "/orders",
+  ORDERS: "/orders",
   CATEGORIES: "/categories",
   COUPONS: "/coupons",
   TICKETS: "/tickets",
   PRODUCTS: "/products",
   CREATE_PRODUCT: "/products/create",
+  CREATE_CATEGORY: "/categories/create",
 });
 
 export const navRoutes = [
@@ -18,6 +26,12 @@ export const navRoutes = [
     route: ROUTES.DASHBOARD,
     properties: ["isSideNav"],
     icon: <House />,
+  },
+  {
+    title: "Orders",
+    route: ROUTES.ORDERS,
+    properties: ["isSideNav"],
+    icon: <ShoppingBag />,
   },
   {
     title: "Products",

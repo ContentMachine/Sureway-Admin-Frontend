@@ -1,4 +1,4 @@
-import Logo from "@/components/components/Logo/Logo";
+import Logo from "@/components/Logo";
 import User from "@/components/User";
 import { Bell } from "lucide-react";
 import React from "react";

@@ -9,3 +9,17 @@ export interface ProductType {
   image: string;
   isActive?: boolean;
 }
+
+export interface OrderType {
+  id: string;
+  date: string;
+  customerName: string;
+  paymentStatus: string;
+  orderSttus: string;
+  total: number;
+  isActive?: boolean;
+}
+
+export interface objectGenericType {
+  [key: string]: boolean;
+}

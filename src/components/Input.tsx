@@ -3,7 +3,7 @@
 import { Dispatch, SetStateAction, useState } from "react";
 import { Loader } from "lucide-react";
 
-type InputProps = {
+interface InputProps extends React.HTMLAttributes<HTMLInputElement> {
   type?: string;
   label?: string;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
@@ -25,7 +25,8 @@ type InputProps = {
   min?: number | string | any;
   max?: number | string | any;
   loading?: boolean;
-};
+  className?: string;
+}
 
 const Input = ({
   type,
@@ -47,12 +48,13 @@ const Input = ({
   min,
   max,
   loading,
+  className,
 }: InputProps) => {
   // States
   const [invalid, setInvalid] = useState(false);
 
   return (
-    <div style={style}>
+    <div style={style} className={className}>
       {label && (
         <>
           <label

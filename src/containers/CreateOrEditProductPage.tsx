@@ -1,6 +1,5 @@
 "use client";
 
-import Button from "@/components/Button";
 import Title from "@/components/Title";
 import { ChevronLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
@@ -21,10 +20,6 @@ const CreateOrEditProductPage = () => {
           />
           <Title>Create Product</Title>
         </div>
-        <Button type="tertiary" className="ml-auto">
-          Cancel
-        </Button>
-        <Button>Save</Button>
       </div>
 
       <CreateOrEditProductForm />

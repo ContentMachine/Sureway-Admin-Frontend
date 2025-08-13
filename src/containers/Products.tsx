@@ -7,14 +7,11 @@ import React, { useState } from "react";
 import ProductSearchAndFilter from "./ProductSearchAndFilter";
 import ProductsTable from "./ProductsTable";
 import { ProductType } from "@/utils/type";
-import DashboardRecentTransactions from "./DashboardRecentTransactions";
-import DashboardTopProducts from "./DashboardTopProducts";
-import DashboardGeneralChart from "./DashboardGeneralChart";
 import Paginator from "@/components/Paginator";
 import { useRouter } from "next/navigation";
 import { ROUTES } from "@/utils/routes";
 
-const tableData = [
+export const tableData = [
   {
     name: "Men Grey Hoodie",
     category: "Hoodies",

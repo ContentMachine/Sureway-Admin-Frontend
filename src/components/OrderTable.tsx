@@ -1,0 +1,155 @@
+"use client";
+
+import Checkbox from "@/components/Checkbox";
+import { activeToggler } from "@/helpers/activeHandlers";
+import { ROUTES } from "@/utils/routes";
+import { OrderType } from "@/utils/type";
+import Link from "next/link";
+import { Dispatch, SetStateAction } from "react";
+
+type Props = {
+  orders: OrderType[];
+  setOrders: Dispatch<SetStateAction<OrderType[]>>;
+};
+
+const tableHeader = [
+  "Order ID",
+  "Date",
+  "Customer",
+  "Payment Status",
+  "Order Status",
+  "Total",
+];
+
+const OrderTable: React.FC<Props> = ({ orders, setOrders }) => {
+  return (
+    <div className="overflow-hidden">
+      <div className="flex items-center border-b-1 border-b-[#E6E9F4]">
+        {tableHeader.map((data, i) => {
+          if (i === 0) {
+            return (
+              <span
+                key={data}
+                className={`${
+                  i === 0 ? "flex-2" : "flex-1"
+                } font-sans font-regular text-sm text-gray-600 py-2.5 flex items-center gap-3`}
+              >
+                <Checkbox
+                  checked={orders.every((data) => data?.isActive)}
+                  onChange={() => {
+                    if (orders.some((data) => data?.isActive)) {
+                      setOrders((prevState) => {
+                        return prevState.map((data) => {
+                          return { ...data, isActive: true };
+                        });
+                      });
+                    }
+                    setOrders((prevState) => {
+                      return prevState.map((data) => {
+                        return { ...data, isActive: !data?.isActive };
+                      });
+                    });
+                  }}
+                />
+                <span>{data}</span>
+              </span>
+            );
+          }
+          return (
+            <span
+              key={data}
+              className={`${
+                i === 0 ? "flex-2" : "flex-1"
+              } font-sans font-regular text-sm text-gray-600 py-2.5`}
+            >
+              <span>{data}</span>
+            </span>
+          );
+        })}
+      </div>
+
+      <div>
+        {orders.map((data, i) => {
+          const paymentIsPaid = data?.paymentStatus === "Paid";
+          const paymentIsFailed = data?.paymentStatus === "Failed";
+          const paymentIsPending = data?.paymentStatus === "Pending";
+
+          const statusIsReady = data?.orderSttus === "Ready";
+          const statusIsDelivered = data?.orderSttus === "Delivered";
+          const statusIsProcessing = data?.orderSttus === "Processing";
+          const statusIsFailed = data?.orderSttus === "Failed";
+
+          return (
+            <div
+              key={i}
+              className={`flex items-center ${
+                i < orders?.length - 1 && "border-b-1 border-b-[#E6E9F4]"
+              }`}
+            >
+              <span className="flex-2 font-sans font-medium text-sm text-black py-4 flex items-center gap-3">
+                <Checkbox
+                  onChange={() => {
+                    activeToggler(i, orders, setOrders);
+                  }}
+                  checked={data?.isActive as boolean}
+                />
+                <div className="flex items-center gap-4">
+                  <Link
+                    className="font-medium text-sm text-black visited:text-blue-200 hover:underline"
+                    href={`${ROUTES.ORDERS}/${data?.id}`}
+                  >
+                    {data?.id}
+                  </Link>
+                </div>
+              </span>
+
+              <span className="flex-1 font-sans font-medium text-sm text-black py-2.5">
+                {data?.date}
+              </span>
+              <span className="flex-1 font-sans font-regular text-sm text-black py-2.5">
+                {data?.customerName}
+              </span>
+              <span className="flex-1 font-sans font-regular text-sm  py-2.5">
+                <span
+                  className={`py-0.5 px-2 rounded-md ${
+                    paymentIsPaid
+                      ? "bg-[#C4F8E2] text-[#06A561]"
+                      : paymentIsPending
+                      ? "bg-[#E6E9F4] text-[#5A607F]"
+                      : paymentIsFailed
+                      ? "bg-red-200 text-red-500"
+                      : "text-black bg-none"
+                  }`}
+                >
+                  {data?.paymentStatus}
+                </span>
+              </span>
+              <span className="flex-1 font-sans font-regular text-sm text-black py-2.5">
+                <span
+                  className={`py-0.5 px-2 rounded-md ${
+                    statusIsDelivered
+                      ? "bg-[#C4F8E2] text-[#06A561]"
+                      : statusIsProcessing
+                      ? "bg-[#E6E9F4] text-[#5A607F]"
+                      : statusIsFailed
+                      ? "bg-red-200 text-red-500"
+                      : statusIsReady
+                      ? "text-blue-200 bg-[#ECF2FF]"
+                      : "text-black bg-none"
+                  }`}
+                >
+                  {data?.orderSttus}
+                </span>
+              </span>
+              <span className="flex-1 font-sans font-regular text-sm text-black py-2.5">
+                {data?.total}
+              </span>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+};
+
+export default OrderTable;

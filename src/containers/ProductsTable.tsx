@@ -1,7 +1,7 @@
 "use client";
 
 import Checkbox from "@/components/Checkbox";
-import { activeToggler, activeTogglerRestAll } from "@/helpers/activeHandlers";
+import { activeToggler } from "@/helpers/activeHandlers";
 import { ProductType } from "@/utils/type";
 import Image from "next/image";
 import { Dispatch, SetStateAction } from "react";

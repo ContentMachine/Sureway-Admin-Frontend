@@ -19,7 +19,7 @@ const Checkbox: React.FC<CheckboxProps> = ({ checked, onChange, label }) => {
       />
       <div
         className={`w-5 h-5 flex items-center justify-center rounded-sm transition-colors ${
-          checked ? "bg-blue-600" : "bg-gray-200"
+          checked ? "bg-blue-200" : "bg-gray-200"
         }`}
       >
         {checked && (

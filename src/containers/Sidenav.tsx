@@ -1,17 +1,20 @@
 "use client";
 
-import { navRoutes } from "@/utils/routes";
+import Button from "@/components/Button";
+import { navRoutes, ROUTES } from "@/utils/routes";
+import { DoorOpen } from "lucide-react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import React from "react";
 
 const Sidenav = () => {
   // Router
   const pathname = usePathname();
+  const router = useRouter();
 
   return (
-    <nav className="w-[250px] bg-blue-100 text-white font-sans p-4">
-      <div className="flex flex-col ">
+    <nav className="w-[250px] bg-blue-100 text-white font-sans p-4 flex flex-col">
+      <div className="flex flex-col">
         {navRoutes.map((data) => {
           return (
             <Link
@@ -29,6 +32,17 @@ const Sidenav = () => {
           );
         })}
       </div>
+
+      <Button
+        type="null"
+        className="px-4 py-2.5 text-red-500 mt-auto "
+        onClick={() => {
+          router.replace(ROUTES.SIGN_IN);
+        }}
+      >
+        <DoorOpen />
+        <span>Logout</span>
+      </Button>
     </nav>
   );
 };

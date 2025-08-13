@@ -36,10 +36,6 @@
   --color-orange-200: #ffa64d;
   --color-orange-300: #cc6600;
 
-  --color-red-100: #d72638;
-  --color-red-200: #f0595b;
-  --color-red-300: #a11c28;
-
   /* Background Colors */
   --color-white-200: #fffbea;
   --color-black-100: #212121;
@@ -130,10 +126,6 @@
     --color-orange-200: #ffa64d;
     --color-orange-300: #cc6600;
 
-    --color-red-100: #d72638;
-    --color-red-200: #f0595b;
-    --color-red-300: #a11c28;
-
     /* Background Colors */
     --color-white-200: #fffbea;
     --color-black-100: #212121;
@@ -212,3 +204,31 @@ body {
     @apply bg-background text-foreground;
   }
 } */
+
+.scrollbar-thin::-webkit-scrollbar {
+  width: 4px;
+  border-radius: 10px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 10px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: #dcd7fe;
+  border-radius: 10px;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.2s ease-in-out;
+}
