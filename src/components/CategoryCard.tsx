@@ -11,6 +11,8 @@ interface Props {
 }
 
 const CategoryCard: React.FC<Props> = ({ image, name, itemCount, onClick }) => {
+  console.log(image, "Image");
+
   return (
     <div
       className="basis-[calc(33%-30px)] rounded-sm relative group"

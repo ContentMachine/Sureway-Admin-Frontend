@@ -1,16 +1,35 @@
+import Button from "@/components/Button";
+import Dropdown from "@/components/Dropdown";
 import FileUploadInput from "@/components/FIleUploadInput";
 import Input from "@/components/Input";
 import TextArea from "@/components/Textarea";
 import { TextareaWithOptions } from "@/components/TextareaWithOptions";
 import Toggle from "@/components/Toggle";
+import { inputChangeHandler } from "@/helpers/inputChangeHandler";
 import { STATES } from "@/utils/constants";
-import React, { useState } from "react";
+import { productType } from "@/utils/type";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 
-const CreateOrEditProductInformation = () => {
+interface Props {
+  data: productType;
+  setData: Dispatch<SetStateAction<productType>>;
+  images: File[];
+  setImages: Dispatch<SetStateAction<File[]>>;
+}
+
+const CreateOrEditProductInformation: React.FC<Props> = ({
+  data,
+  setData,
+  images,
+  setImages,
+}) => {
   // States
-  const [files, setFiles] = useState<File[]>([]);
   const [addTax, setAddTaxTax] = useState(false);
-  const [deliveryStates, setDeliveryStates] = useState([""]);
+
+  // Effects
+  useEffect(() => {
+    setData((prevState) => ({ ...prevState, hasTax: addTax }));
+  }, [addTax]);
 
   return (
     <section className="basis-[70%] bg-white p-7 rounded-md font-sans">
@@ -19,28 +38,56 @@ const CreateOrEditProductInformation = () => {
         className="flex flex-col gap-6"
         onSubmit={(e) => e.preventDefault()}
       >
-        <Input label="Product Name" />
-        <TextArea label="Product Description" />
+        <Input
+          label="Product Name"
+          name="name"
+          value={data?.name}
+          onChange={(e) => inputChangeHandler(e, setData)}
+        />
+        <TextArea
+          label="Product Description"
+          name="description"
+          value={data?.description}
+          onChange={(e) => inputChangeHandler(e, setData)}
+        />
 
         <hr className="border-0.5 border-[#ebebeb]" />
 
         <h2 className="mb-0 text-black-600 text-xl font-bold ">Images</h2>
         <FileUploadInput
-          files={files}
-          setFiles={setFiles}
+          files={images}
+          setFiles={setImages}
           title="Upload Product Images"
+          accept="image/*"
+          multiple
         />
 
         <hr className="border-0.5 border-[#ebebeb]" />
 
         <h2 className="mb-0 text-black-600 text-xl font-bold ">Price</h2>
         <div className="flex flex-start gap-7 flex-wrap">
-          <Input label="Product Price" className="flex-1" type="number" />
-          <Input label="Discount Price" className="flex-1" type="number" />
+          <Input
+            label="Product Price"
+            className="flex-1"
+            type="number"
+            name="price"
+            value={String(data?.price)}
+            onChange={(e) => inputChangeHandler(e, setData)}
+          />
+          <Input
+            label="Discount Price in percentage"
+            className="flex-1"
+            type="number"
+            max={100}
+            name="discount"
+            value={String(data?.discount)}
+            onChange={(e) => inputChangeHandler(e, setData)}
+            condition={data?.discount <= 100}
+          />
           <div className="basis-[100%] flex items-center gap-3">
-            <Toggle checked={addTax} setChecked={setAddTaxTax} />
+            <Toggle checked={data?.hasTax} setChecked={setAddTaxTax} id="tax" />
             <label
-              htmlFor=""
+              htmlFor="tax"
               className="font-sans text-black text-main font-medium"
             >
               Add tax for this product
@@ -49,16 +96,18 @@ const CreateOrEditProductInformation = () => {
         </div>
 
         <hr className="border-0.5 border-[#ebebeb]" />
+        <h2 className="mb-0 text-black-600 text-xl font-bold ">Coupons</h2>
+        <div>
+          <Dropdown label="Select Coupon Code" options={["TOBE"]} />
 
-        <h2 className="mb-0 text-black-600 text-xl font-bold ">Delivery</h2>
-        <div className="flex flex-col flex-start gap-7 flex-wrap">
-          <Input label="Weight" className="flex-1" type="number" />
-          <TextareaWithOptions
-            options={deliveryStates}
-            setOptions={setDeliveryStates}
-            label="Select States"
-            suggestions={STATES}
-          />
+          <p className="text-gray-600 text-xs font-medium mt-2">
+            Coupons already come with a discount, therefore discounts and coupon
+            codes cannot go hand in hand
+          </p>
+
+          <Button type="null" className="px-0">
+            Create new
+          </Button>
         </div>
       </form>
     </section>

@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Montserrat } from "next/font/google";
 import "./globals.css";
+import { ToastContextProvider } from "@/context/ToastContext";
+import AuthContextProvider from "@/context/AuthContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -32,7 +34,9 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${montserrat?.variable} antialiased`}
       >
-        {children}
+        <ToastContextProvider>
+          <AuthContextProvider>{children}</AuthContextProvider>
+        </ToastContextProvider>
       </body>
     </html>
   );

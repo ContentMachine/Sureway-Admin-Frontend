@@ -9,7 +9,11 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
+    "@mui/material": "^7.3.1",
     "@radix-ui/react-dropdown-menu": "^2.1.15",
+    "axios": "^1.11.0",
     "clsx": "^2.1.1",
     "lucide": "^0.536.0",
     "lucide-react": "^0.536.0",
@@ -19,6 +23,7 @@
     "react-dom": "19.1.0",
     "react-is": "^19.1.1",
     "recharts": "^3.1.2",
+    "swr": "^2.3.6",
     "tailwind-merge": "^3.3.1"
   },
   "devDependencies": {

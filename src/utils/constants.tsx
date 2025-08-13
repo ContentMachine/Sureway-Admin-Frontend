@@ -37,3 +37,5 @@ export const STATES = [
   "Yobe",
   "Zamfara",
 ];
+
+export const LOCAL_STORAGE_AUTH_KEY = "sureway-admin-token";

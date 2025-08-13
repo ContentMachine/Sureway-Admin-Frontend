@@ -111,14 +111,14 @@ const FileUploadInput = ({
       </div>
 
       {files?.length > 0 && (
-        <div className="mt-4">
+        <div className="my-4">
           <h4>Uploaded File</h4>
 
           {files?.map((data, i) => {
             return (
               <div
                 key={i}
-                className="flex items-center gap-4 justify-between p-2 border-1 border-blue-200 overflow-hidden rounded-sm"
+                className="flex items-center gap-4 justify-between p-2 border-1 border-blue-200 overflow-hidden rounded-sm mb-2"
               >
                 <span className="text-[12px] font-medium font-sans block">
                   {data?.name}

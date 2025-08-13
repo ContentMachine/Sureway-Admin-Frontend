@@ -2,63 +2,24 @@
 
 import Button from "@/components/Button";
 import CategoryCard from "@/components/CategoryCard";
+import LoaderComponent from "@/components/Loader";
+import NoData from "@/components/NoData";
 import Title from "@/components/Title";
+import { useCategories } from "@/hooks/useCategories";
 import { ROUTES } from "@/utils/routes";
+import { categoryType } from "@/utils/type";
 import { Plus } from "lucide-react";
 import { useRouter } from "next/navigation";
-import React from "react";
-
-const categories = [
-  {
-    name: "Men Clothes",
-    itemsCount: 12,
-    image: "/product.svg",
-  },
-  {
-    name: "Men Clothes",
-    itemsCount: 12,
-    image: "/product.svg",
-  },
-  {
-    name: "Men Clothes",
-    itemsCount: 12,
-    image: "/product.svg",
-  },
-  {
-    name: "Men Clothes",
-    itemsCount: 12,
-    image: "/product.svg",
-  },
-  {
-    name: "Men Clothes",
-    itemsCount: 12,
-    image: "/product.svg",
-  },
-  {
-    name: "Men Clothes",
-    itemsCount: 12,
-    image: "/product.svg",
-  },
-  {
-    name: "Men Clothes",
-    itemsCount: 12,
-    image: "/product.svg",
-  },
-  {
-    name: "Men Clothes",
-    itemsCount: 12,
-    image: "/product.svg",
-  },
-  {
-    name: "Men Clothes",
-    itemsCount: 12,
-    image: "/product.svg",
-  },
-];
+import React, { useMemo } from "react";
 
 const Categories = () => {
   // Router
   const router = useRouter();
+
+  // Requests
+  const { isLoading, data } = useCategories();
+
+  const categories: categoryType[] = useMemo(() => data?.data, [data]);
 
   return (
     <section className="flex flex-col gap-6 min-h-[calc(100vh-116px)]">
@@ -75,19 +36,25 @@ const Categories = () => {
       </div>
 
       <div className="flex gap-7.5 flex-wrap">
-        {categories?.map((data, i) => {
-          return (
-            <CategoryCard
-              key={i}
-              name={data?.name}
-              itemCount={data?.itemsCount}
-              image={data?.image}
-              onClick={() => {
-                router.push(`/categories/${i}`);
-              }}
-            />
-          );
-        })}
+        {isLoading ? (
+          <LoaderComponent />
+        ) : categories?.length < 1 ? (
+          <NoData>No categories available at this time</NoData>
+        ) : (
+          categories?.map((data, i) => {
+            return (
+              <CategoryCard
+                key={i}
+                name={data?.name}
+                itemCount={data?.productCount}
+                image={data?.image}
+                onClick={() => {
+                  router.push(`/categories/${data?._id}`);
+                }}
+              />
+            );
+          })
+        )}
       </div>
     </section>
   );

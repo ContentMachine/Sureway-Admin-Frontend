@@ -1,3 +1,5 @@
+import RequireAuth from "@/components/RequireAuth";
+import UseSWRConfigProvider from "@/config/SWRConfig";
 import DashboardHeader from "@/containers/DashboardHeader";
 import Sidenav from "@/containers/Sidenav";
 import React from "react";
@@ -13,7 +15,9 @@ const layout: React.FC<Props> = ({ children }) => {
       <div className="flex flex-1 h-[calc(100vh-68px)]">
         <Sidenav />
         <div className="flex-1 py-6 px-10 bg-[#FFF6F4] overflow-y-auto">
-          {children}
+          <UseSWRConfigProvider>
+            <RequireAuth>{children}</RequireAuth>
+          </UseSWRConfigProvider>
         </div>
       </div>
     </main>

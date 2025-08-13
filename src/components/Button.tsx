@@ -46,18 +46,14 @@ const Button = ({
             : type === "bordered"
             ? "border-blue-200 border-1.5 text-white"
             : "bg-blue-200 border-none text-white"
-        } ${className}`
+        } ${className} disabled:bg-gray-600 disabled:cursor-not-allowed`
       )}
       onClick={onClick}
       disabled={disabled}
       id={id}
       style={style}
     >
-      {loading ? (
-        <Loader size="1rem" color="inherit" style={{ color: "#000" }} />
-      ) : (
-        children
-      )}
+      {loading ? <Loader size={16} className="animate-spin" /> : children}
       {icon && <span>{icon}</span>}
     </button>
   );
