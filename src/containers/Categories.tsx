@@ -47,7 +47,7 @@ const Categories = () => {
                 key={i}
                 name={data?.name}
                 itemCount={data?.productCount}
-                image={data?.image}
+                image={data?.images?.[0]}
                 onClick={() => {
                   router.push(`/categories/${data?._id}`);
                 }}

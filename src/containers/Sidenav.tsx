@@ -21,6 +21,10 @@ const Sidenav = () => {
               href={data?.route}
               key={data?.route}
               className={`flex items-center gap-4 text-[14px]  font-medium px-4 py-2.5 rounded-sm mb-2 hover:bg-white hover:text-blue-200 transition-all ease-in-out duration-200 ${
+                !data?.isActive
+                  ? "cursor-not-allowed pointer-events-none opacity-[0.3]"
+                  : "cursor-pointer"
+              }  ${
                 pathname?.includes(data?.route)
                   ? "text-blue-200 bg-white"
                   : "text-white bg-transparent"

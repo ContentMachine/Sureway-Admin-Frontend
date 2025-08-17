@@ -2,14 +2,17 @@
 
 import Title from "@/components/Title";
 import { ChevronLeft } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import CreateOrEditProductForm from "./CreateOrEditProductForm";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { productType } from "@/utils/type";
+import { useProductById } from "@/hooks/useProducts";
+import LoaderComponent from "@/components/Loader";
 
 const CreateOrEditProductPage = () => {
   // ROuter
   const router = useRouter();
+  const { productId } = useParams();
 
   // States
   const [createProductData, setCreateProductData] = useState<productType>({
@@ -21,8 +24,30 @@ const CreateOrEditProductPage = () => {
     category: null,
     subCategory: null,
     coupons: [],
+    quantity: 0,
   });
   const [images, setImages] = useState<File[]>([]);
+
+  // Requests
+  const { isLoading, data } = useProductById(productId as string);
+
+  // Effects
+  useEffect(() => {
+    if (data && productId) {
+      setCreateProductData({
+        name: data?.data?.name,
+        description: data?.data?.description,
+        price: data?.data?.price,
+        discount: data?.data?.discount,
+        hasTax: data?.data?.hasTax,
+        category: data?.data?.category?._id,
+        subCategory: data?.data?.subCategory,
+        coupons: data?.data?.coupon,
+        quantity: data?.data?.quantity,
+      });
+      setImages(data?.data?.images);
+    }
+  }, [data, productId]);
 
   return (
     <section className="flex flex-col gap-7.5">
@@ -33,16 +58,24 @@ const CreateOrEditProductPage = () => {
             color="#909090"
             onClick={() => router.back()}
           />
-          <Title>Create Product</Title>
+          <Title>
+            {productId
+              ? `Edit ${createProductData?.name || "Product"}`
+              : " Create Product"}
+          </Title>
         </div>
       </div>
 
-      <CreateOrEditProductForm
-        data={createProductData}
-        setData={setCreateProductData}
-        images={images}
-        setImages={setImages}
-      />
+      {isLoading ? (
+        <LoaderComponent />
+      ) : (
+        <CreateOrEditProductForm
+          data={createProductData}
+          setData={setCreateProductData}
+          images={images}
+          setImages={setImages}
+        />
+      )}
     </section>
   );
 };

@@ -3,6 +3,7 @@
 import Button from "@/components/Button";
 import FileUploadInput from "@/components/FIleUploadInput";
 import Input from "@/components/Input";
+import TextArea from "@/components/Textarea";
 import Title from "@/components/Title";
 import { inputChangeHandler } from "@/helpers/inputChangeHandler";
 import useRequest from "@/hooks/useRequest";
@@ -15,6 +16,7 @@ const CreateCategory = () => {
   // States
   const [image, setImage] = useState<File[]>([]);
   const [categoryName, setCategoryName] = useState("");
+  const [categoryDescription, setCategoryDescription] = useState("");
   const [createCategoryState, setCreateCategoryState] = useState<requestType>({
     isLoading: false,
     data: null,
@@ -40,6 +42,7 @@ const CreateCategory = () => {
       successMessage: `${categoryName} created successfully!`,
       successFunction(res) {
         setCategoryName("");
+        setCategoryDescription("");
         setImage([]);
       },
     });
@@ -51,8 +54,11 @@ const CreateCategory = () => {
 
     categoryFormData.append("name", categoryName);
     if (image.length > 0) {
-      categoryFormData.append("image", image[0]);
+      image.forEach((data) => {
+        categoryFormData.append("images", data);
+      });
     }
+    categoryFormData.append("description", categoryDescription);
 
     setFormDataState(categoryFormData);
   }, [categoryName, image]);
@@ -73,11 +79,20 @@ const CreateCategory = () => {
             value={categoryName}
             onChange={(e) => inputChangeHandler(e, setCategoryName, true)}
           />
+          <TextArea
+            label="Category Description"
+            name="categoryDescription"
+            value={categoryDescription}
+            onChange={(e) =>
+              inputChangeHandler(e, setCategoryDescription, true)
+            }
+          />
           <FileUploadInput
             title="Image"
             files={image}
             setFiles={setImage}
             accept="image/*"
+            multiple
           />
         </form>
       </div>
@@ -94,7 +109,7 @@ const CreateCategory = () => {
 
         <Button
           onClick={createCategory}
-          disabled={!categoryName || image.length < 1}
+          disabled={!categoryName || !categoryDescription || image.length < 1}
           loading={createCategoryState?.isLoading}
         >
           <Check />

@@ -4,6 +4,8 @@ import CreateOrEditProductCategories from "./CreateOrEditProductCategories";
 import CreateOrEditProductInformation from "./CreateOrEditProductInformation";
 import { productType, requestType } from "@/utils/type";
 import useRequest from "@/hooks/useRequest";
+import { useParams } from "next/navigation";
+import { mutate } from "swr";
 
 interface Props {
   data: productType;
@@ -22,6 +24,9 @@ const CreateOrEditProductForm: React.FC<Props> = ({
   const [formData, setFormData] = useState(new FormData());
   const [createProductRequestState, setCreateProductRequestState] =
     useState<requestType>({ isLoading: false, data: null, error: null });
+
+  // Router
+  const { productId } = useParams();
 
   // Hooks
   const { requestHandler } = useRequest();
@@ -46,8 +51,24 @@ const CreateOrEditProductForm: React.FC<Props> = ({
           category: null,
           subCategory: null,
           coupons: [],
+          quantity: 0,
         });
         setImages([]);
+      },
+    });
+  };
+
+  const handleEditProduct = () => {
+    requestHandler({
+      url: `/product/${productId}`,
+      method: "PUT",
+      data: formData,
+      isMultipart: true,
+      state: createProductRequestState,
+      setState: setCreateProductRequestState,
+      successMessage: "Product edited successfully",
+      successFunction() {
+        mutate(`/product/${productId}`);
       },
     });
   };
@@ -62,7 +83,9 @@ const CreateOrEditProductForm: React.FC<Props> = ({
     subFormData.append("hasTax", String(data?.hasTax));
     subFormData.append("category", data?.category as string);
     subFormData.append("subCategory", data?.subCategory as string);
-    if (data?.coupons.length > 0) {
+    subFormData.append("quantity", String(data?.quantity));
+
+    if (data?.coupons?.length > 0) {
       data.coupons.forEach((coupon) => {
         subFormData.append("coupons", coupon);
       });
@@ -96,13 +119,20 @@ const CreateOrEditProductForm: React.FC<Props> = ({
           Cancel
         </Button>
         <Button
-          onClick={handleCreateProduct}
+          onClick={() => {
+            if (productId) {
+              handleEditProduct();
+            } else {
+              handleCreateProduct();
+            }
+          }}
           loading={createProductRequestState?.isLoading}
           disabled={
             !data?.name ||
             !data?.description ||
             !data?.category ||
-            data?.price < 1
+            data?.price < 1 ||
+            data?.quantity < 1
           }
         >
           Save

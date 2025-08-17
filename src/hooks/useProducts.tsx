@@ -7,3 +7,9 @@ export const useProducts = (params: queryObjectType) => {
   const queryWithUrl = generateQueryString(url, params);
   return useGetHook(queryWithUrl);
 };
+
+export const useProductById = (id: string) => {
+  const url = id ? `/product/${id}` : null;
+
+  return useGetHook(url);
+};

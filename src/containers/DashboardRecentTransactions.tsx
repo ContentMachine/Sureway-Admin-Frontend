@@ -1,38 +1,15 @@
-const tableHeaders = ["Name", "Date", "Amount", "Status"];
-const tableBody = [
-  {
-    name: "Jagarnath S.",
-    date: "24.05.2023",
-    amount: "$124.97",
-    status: "Paid",
-  },
-  {
-    name: "Jagarnath S.",
-    date: "24.05.2023",
-    amount: "$124.97",
-    status: "Paid",
-  },
-  {
-    name: "Jagarnath S.",
-    date: "24.05.2023",
-    amount: "$124.97",
-    status: "Paid",
-  },
-  {
-    name: "Jagarnath S.",
-    date: "24.05.2023",
-    amount: "$124.97",
-    status: "Paid",
-  },
-  {
-    name: "Jagarnath S.",
-    date: "24.05.2023",
-    amount: "$124.97",
-    status: "Pending",
-  },
-];
+import { formatCurrency } from "@/helpers/formatAmount";
+import { orderResponseType } from "@/utils/type";
+import moment from "moment";
+import React from "react";
 
-const DashboardRecentTransactions = () => {
+const tableHeaders = ["Name", "Date", "Amount", "Status"];
+
+interface Props {
+  transactions: orderResponseType[];
+}
+
+const DashboardRecentTransactions: React.FC<Props> = ({ transactions }) => {
   return (
     <div className="rounded-lg bg-white p-6 flex-1  flex flex-col box-shadow2 font-sans">
       <h2 className="font-sans font-bold text-xl mb-5">Recent Transactions </h2>
@@ -51,24 +28,24 @@ const DashboardRecentTransactions = () => {
       </div>
 
       <div>
-        {tableBody.map((data, i) => {
-          const isPaid = data?.status === "Paid";
+        {transactions?.map((data, i) => {
+          const isPaid = data?.status?.toLowerCase() === "successful";
 
           return (
             <div
-              key={i}
+              key={data?._id}
               className={`flex items-center ${
-                i < tableBody?.length - 1 && "border-b-1 border-b-[#E6E9F4]"
+                i < transactions?.length - 1 && "border-b-1 border-b-[#E6E9F4]"
               }`}
             >
               <span className="flex-1 font-sans font-medium text-sm text-black py-2.5">
-                {data?.name}
+                {data?.fullName}
               </span>
               <span className="flex-1 font-sans font-regular text-sm text-black py-2.5">
-                {data?.date}
+                {moment(data?.createdAt).format("DD/MM/YYYY")}
               </span>
               <span className="flex-1 font-sans font-regular text-sm text-black py-2.5">
-                {data?.amount}
+                ₦{formatCurrency(data?.price)}
               </span>
               <span
                 className={`flex-1 font-sans font-regular text-sm text-black py-2.5 inline-flex `}
@@ -80,7 +57,7 @@ const DashboardRecentTransactions = () => {
                       : "bg-[#E6E9F4] text-[#5A607F]"
                   }`}
                 >
-                  {data?.status}
+                  {data?.paymentStatus}
                 </span>
               </span>
             </div>

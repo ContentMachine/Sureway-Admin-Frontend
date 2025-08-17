@@ -8,7 +8,11 @@ import Modal from "@/components/Modal";
 import Toggle from "@/components/Toggle";
 import { activeToggler } from "@/helpers/activeHandlers";
 import { setAllModalsFalse, setModalTrue } from "@/helpers/modalHandlers";
-import { categoryType, objectGenericType } from "@/utils/type";
+import {
+  categoryResponseType,
+  categoryType,
+  objectGenericType,
+} from "@/utils/type";
 import React, { Dispatch, SetStateAction, useState } from "react";
 import CreateSubCategoryModalBody from "./CreateSubCategoryModalBody";
 import { inputChangeHandler } from "@/helpers/inputChangeHandler";
@@ -17,8 +21,8 @@ import { UploadCloud } from "lucide-react";
 import NoData from "@/components/NoData";
 
 interface Props {
-  category: categoryType | null;
-  setCategory: Dispatch<SetStateAction<categoryType | null>>;
+  category: categoryResponseType | null;
+  setCategory: Dispatch<SetStateAction<categoryResponseType | null>>;
   image: File[];
   setImage: Dispatch<SetStateAction<File[]>>;
   changeImage: boolean;
@@ -93,14 +97,21 @@ const SinglyCategoryName: React.FC<Props> = ({
               value={category?.name}
               onChange={(e) => inputChangeHandler(e, setCategory)}
             />
+
+            <Input
+              label="Category Description"
+              name="description"
+              value={category?.description}
+              onChange={(e) => inputChangeHandler(e, setCategory)}
+            />
             {!changeImage ? (
               <div className="relative group transition-all ease-in-out duration-200 rounded-lg">
                 <Image
-                  src={category?.image as string}
+                  src={category?.images?.[0] as string}
                   alt={category?.name as string}
                   width={300}
                   height={200}
-                  className=" h-60 w-full rounded-lg object-center"
+                  className=" h-60 rounded-lg object-center max-w-[500px] h-50 border-3"
                 />
 
                 <div className="absolute w-full top-0 h-full items-center justify-center bg-[rgba(0,0,0,0.4)] group-hover:flex hidden rounded-lg">

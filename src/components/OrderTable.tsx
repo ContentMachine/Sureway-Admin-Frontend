@@ -2,36 +2,39 @@
 
 import Checkbox from "@/components/Checkbox";
 import { activeToggler } from "@/helpers/activeHandlers";
+import { formatCurrency } from "@/helpers/formatAmount";
 import { ROUTES } from "@/utils/routes";
-import { OrderType } from "@/utils/type";
+import { orderResponseType, OrderType } from "@/utils/type";
+import { capitalize } from "@mui/material";
+import moment from "moment";
 import Link from "next/link";
 import { Dispatch, SetStateAction } from "react";
 
 type Props = {
-  orders: OrderType[];
-  setOrders: Dispatch<SetStateAction<OrderType[]>>;
+  orders: orderResponseType[];
+  setOrders: Dispatch<SetStateAction<orderResponseType[]>>;
 };
 
 const tableHeader = [
   "Order ID",
   "Date",
-  "Customer",
+  "Customer Name",
   "Payment Status",
   "Order Status",
-  "Total",
+  "Amount Paid",
 ];
 
 const OrderTable: React.FC<Props> = ({ orders, setOrders }) => {
   return (
     <div className="overflow-hidden">
-      <div className="flex items-center border-b-1 border-b-[#E6E9F4]">
+      <div className="flex items-center shrink-0 grow-0  gap-3 border-b-1 border-b-[#E6E9F4]">
         {tableHeader.map((data, i) => {
           if (i === 0) {
             return (
               <span
                 key={data}
                 className={`${
-                  i === 0 ? "flex-2" : "flex-1"
+                  i === 0 ? "flex-1" : "flex-1"
                 } font-sans font-regular text-sm text-gray-600 py-2.5 flex items-center gap-3`}
               >
                 <Checkbox
@@ -59,7 +62,7 @@ const OrderTable: React.FC<Props> = ({ orders, setOrders }) => {
             <span
               key={data}
               className={`${
-                i === 0 ? "flex-2" : "flex-1"
+                i === 0 ? "flex-1" : "flex-1"
               } font-sans font-regular text-sm text-gray-600 py-2.5`}
             >
               <span>{data}</span>
@@ -70,44 +73,46 @@ const OrderTable: React.FC<Props> = ({ orders, setOrders }) => {
 
       <div>
         {orders.map((data, i) => {
-          const paymentIsPaid = data?.paymentStatus === "Paid";
+          const paymentIsPaid = data?.paymentStatus === "Successful";
           const paymentIsFailed = data?.paymentStatus === "Failed";
           const paymentIsPending = data?.paymentStatus === "Pending";
 
-          const statusIsReady = data?.orderSttus === "Ready";
-          const statusIsDelivered = data?.orderSttus === "Delivered";
-          const statusIsProcessing = data?.orderSttus === "Processing";
-          const statusIsFailed = data?.orderSttus === "Failed";
+          const statusIsReady = data?.status === "ready";
+          const statusIsDelivered = data?.status === "delivered";
+          const statusIsProcessing = data?.status === "processing";
+          const statusIsFailed = data?.status === "failed";
+
+          console.log(data?.status, statusIsDelivered, "dd");
 
           return (
             <div
               key={i}
-              className={`flex items-center ${
+              className={`flex items-center gap-3 flex-shrink-0 flex-grow-0  ${
                 i < orders?.length - 1 && "border-b-1 border-b-[#E6E9F4]"
               }`}
             >
-              <span className="flex-2 font-sans font-medium text-sm text-black py-4 flex items-center gap-3">
+              <span className="flex-1 font-sans font-medium text-sm text-black py-4 flex items-center gap-3">
                 <Checkbox
                   onChange={() => {
                     activeToggler(i, orders, setOrders);
                   }}
                   checked={data?.isActive as boolean}
                 />
-                <div className="flex items-center gap-4">
+                <span className="flex items-center gap-4 ">
                   <Link
-                    className="font-medium text-sm text-black visited:text-blue-200 hover:underline"
-                    href={`${ROUTES.ORDERS}/${data?.id}`}
+                    className="font-medium text-sm text-black visited:text-blue-200 hover:underline "
+                    href={`${ROUTES.ORDERS}/${data?._id}`}
                   >
-                    {data?.id}
+                    {data?._id?.slice(0, 15)}...
                   </Link>
-                </div>
+                </span>
               </span>
 
               <span className="flex-1 font-sans font-medium text-sm text-black py-2.5">
-                {data?.date}
+                {moment(data?.createdAt).format("Do MMM, YYYY")}
               </span>
               <span className="flex-1 font-sans font-regular text-sm text-black py-2.5">
-                {data?.customerName}
+                {capitalize(data?.fullName)}
               </span>
               <span className="flex-1 font-sans font-regular text-sm  py-2.5">
                 <span
@@ -121,7 +126,7 @@ const OrderTable: React.FC<Props> = ({ orders, setOrders }) => {
                       : "text-black bg-none"
                   }`}
                 >
-                  {data?.paymentStatus}
+                  {capitalize(data?.paymentStatus)}
                 </span>
               </span>
               <span className="flex-1 font-sans font-regular text-sm text-black py-2.5">
@@ -138,11 +143,11 @@ const OrderTable: React.FC<Props> = ({ orders, setOrders }) => {
                       : "text-black bg-none"
                   }`}
                 >
-                  {data?.orderSttus}
+                  {capitalize(data?.status)}
                 </span>
               </span>
               <span className="flex-1 font-sans font-regular text-sm text-black py-2.5">
-                {data?.total}
+                ₦{formatCurrency(data?.price)}
               </span>
             </div>
           );

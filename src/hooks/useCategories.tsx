@@ -13,7 +13,13 @@ export const useCategoryById = (id: string) => {
 };
 
 export const useCategoryProducts = (id: string) => {
-  const url = id ? `category/${id}` : null;
+  const url = id ? `/category/category/${id}` : null;
+
+  return useGetHook(url);
+};
+
+export const useCustomReminderSubCategories = (id: string) => {
+  const url = id ? `/category/category/${id}` : null;
 
   return useGetHook(url);
 };

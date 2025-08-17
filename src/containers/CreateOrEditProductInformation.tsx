@@ -8,6 +8,8 @@ import Toggle from "@/components/Toggle";
 import { inputChangeHandler } from "@/helpers/inputChangeHandler";
 import { STATES } from "@/utils/constants";
 import { productType } from "@/utils/type";
+import { Trash2 } from "lucide-react";
+import Image from "next/image";
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 
 interface Props {
@@ -25,6 +27,7 @@ const CreateOrEditProductInformation: React.FC<Props> = ({
 }) => {
   // States
   const [addTax, setAddTaxTax] = useState(false);
+  const [showImageFiles, setShowImageFiles] = useState(false);
 
   // Effects
   useEffect(() => {
@@ -54,13 +57,47 @@ const CreateOrEditProductInformation: React.FC<Props> = ({
         <hr className="border-0.5 border-[#ebebeb]" />
 
         <h2 className="mb-0 text-black-600 text-xl font-bold ">Images</h2>
-        <FileUploadInput
-          files={images}
-          setFiles={setImages}
-          title="Upload Product Images"
-          accept="image/*"
-          multiple
-        />
+        {showImageFiles && (
+          <FileUploadInput
+            files={images}
+            setFiles={setImages}
+            title="Upload Product Images"
+            accept="image/*"
+            multiple
+          />
+        )}
+        <div className="flex items-center gap-3 flex-wrap">
+          {Array.isArray(images) &&
+            !showImageFiles &&
+            images?.map((data) => {
+              if (typeof data === "string")
+                return (
+                  <Image
+                    src={data as string}
+                    alt="Image"
+                    key={data as string}
+                    width={120}
+                    height={120}
+                    className="w-30 h-30 "
+                  />
+                );
+            })}
+          {!showImageFiles && (
+            <div className="basis-full mt-4">
+              <Button
+                className="px-4 py-2 text-sm rounded-sm"
+                type="tertiary"
+                onClick={() => {
+                  setShowImageFiles(true);
+                  setImages([]);
+                }}
+              >
+                <Trash2 size={16} />
+                <span>Delete all images</span>
+              </Button>
+            </div>
+          )}
+        </div>
 
         <hr className="border-0.5 border-[#ebebeb]" />
 

@@ -207,7 +207,7 @@ const Dropdown = (props: DropdownProps) => {
               </p>
             ) : (
               <div className="w-full h-full min-h-50 flex items-center justify-center">
-                <Loader2 className="spinner" />
+                <Loader2 className="animate-spin" />
               </div>
             )}
           </div>

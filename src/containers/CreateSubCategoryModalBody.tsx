@@ -1,11 +1,12 @@
 import Button from "@/components/Button";
+import FileUploadInput from "@/components/FIleUploadInput";
 import Input from "@/components/Input";
 import { inputChangeHandler } from "@/helpers/inputChangeHandler";
 import useRequest from "@/hooks/useRequest";
 import { requestType } from "@/utils/type";
 import { Trash2, X } from "lucide-react";
 import { useParams } from "next/navigation";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { mutate } from "swr";
 
 interface Props {
@@ -17,6 +18,12 @@ const CreateSubCategoryModalBody: React.FC<Props> = ({ onClose }) => {
   const [createSubCategoryState, setCreateSubCategoryState] =
     useState<requestType>({ isLoading: false, data: null, error: null });
   const [name, setName] = useState("");
+  const [subCategoryData, setSubCategoryData] = useState({
+    name: "",
+    description: "",
+  });
+  const [images, setImages] = useState<File[]>([]);
+  const [formData, setFormData] = useState(new FormData());
 
   // Hooks
   const { requestHandler } = useRequest();
@@ -29,8 +36,9 @@ const CreateSubCategoryModalBody: React.FC<Props> = ({ onClose }) => {
     e.preventDefault();
     requestHandler({
       url: `/category/${categoryId}/subCategory`,
+      isMultipart: true,
       method: "POST",
-      data: { name },
+      data: formData,
       state: createSubCategoryState,
       setState: setCreateSubCategoryState,
       successFunction(res) {
@@ -40,6 +48,19 @@ const CreateSubCategoryModalBody: React.FC<Props> = ({ onClose }) => {
       },
     });
   };
+
+  // Effects
+  useEffect(() => {
+    const subFormData = new FormData();
+
+    subFormData.append("name", subCategoryData?.name);
+    subFormData.append("description", subCategoryData?.description);
+    images.forEach((image) => {
+      return subFormData.append("images", image);
+    });
+
+    setFormData(subFormData);
+  }, [createSubCategoryState, images]);
 
   return (
     <div className="max-w-[550px]">
@@ -51,12 +72,26 @@ const CreateSubCategoryModalBody: React.FC<Props> = ({ onClose }) => {
         this category
       </p>
 
-      <form>
+      <form className="flex flex-col gap-4">
         <Input
           label="Sub-category name"
           name="name"
-          onChange={(e) => inputChangeHandler(e, setName, true)}
-          value={name}
+          onChange={(e) => inputChangeHandler(e, setSubCategoryData)}
+          value={subCategoryData?.name}
+        />
+
+        <Input
+          label="Sub-category Description"
+          name="description"
+          onChange={(e) => inputChangeHandler(e, setSubCategoryData)}
+          value={subCategoryData?.description}
+        />
+        <FileUploadInput
+          files={images}
+          setFiles={setImages}
+          title="Upload Sub-category Images (max 4)"
+          multiple
+          accept="images/*"
         />
 
         <div className="flex items-center gap-4 mt-8 justify-end">
@@ -77,7 +112,7 @@ const CreateSubCategoryModalBody: React.FC<Props> = ({ onClose }) => {
             type="delete"
             onClick={handleAddSubCategory}
             loading={createSubCategoryState?.isLoading}
-            disabled={!name}
+            disabled={!subCategoryData?.name || !subCategoryData?.description}
           >
             <Trash2 size={18} />
             <span>Add Sub-category</span>

@@ -8,6 +8,7 @@ export interface ProductType {
   votes: number;
   image: string;
   isActive?: boolean;
+  quantity: number;
 }
 
 export interface OrderType {
@@ -32,14 +33,18 @@ export type requestType = {
 };
 
 export type userType = {
+  createdAt: string;
   email: string;
-  firstName: string;
-  lastName: string;
+  name: string;
+  role: string;
+  updatedAt: string;
+  __v: number;
+  _id: string;
 };
 
 export type categoryType = {
   createdAt: string;
-  image: string;
+  images: string[];
   name: string;
   productCount: number;
   subCategories: subCategoryType[];
@@ -52,6 +57,8 @@ export type subCategoryType = {
   name: string;
   _id: string;
   isActive?: boolean;
+  description: string;
+  images: string[];
 };
 
 export type productType = {
@@ -63,6 +70,84 @@ export type productType = {
   category: null | string;
   subCategory: null | string;
   coupons: string[];
+  quantity: number;
+  isActive?: boolean;
+};
+
+export type productResponseType = {
+  coupons: null | string[];
+  createdAt: string;
+  description: string;
+  discount: number;
+  hasTax: boolean;
+  images: string[];
+  name: string;
+  price: number;
+  quantity: number;
+  rating: number;
+  subCategory: string;
+  updatedAt: string;
+  __v: number;
+  _id: string;
+  isActive?: boolean;
+  category: categoryResponseType;
+};
+
+export type categoryResponseType = {
+  _id: string;
+  description?: string;
+  name: string;
+  images: string[];
+  subCategories: subcategoryResponseType[];
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type subcategoryResponseType = {
+  name: string;
+  _id: string;
+  description: string;
+  images: string[];
 };
 
 export type queryObjectType = { [key: string]: string | number };
+
+export type orderResponseType = {
+  fullName: string;
+  email: string;
+  phone: string;
+  customText: string;
+  whatToAchieve: string;
+  price: string;
+  quantity: string;
+  productId: string | productResponseType;
+  deliveryAddress: string;
+  paymentRef: string;
+  paymentMethod: string;
+  images: string[];
+  isActive?: boolean;
+  status: string;
+  _id: string;
+  createdAt: string;
+  paymentStatus: string;
+  subCategory: subcategoryResponseType;
+};
+
+export type statsType = {
+  orders: number;
+  revenue: number;
+  users: number;
+};
+
+export type ordersOverTimeType = {
+  month: string;
+  totalOrders: number;
+};
+
+export type topProductsType = {
+  name: string;
+  orderCount: number;
+  price: number;
+  productId: string;
+  totalUnits: number;
+};

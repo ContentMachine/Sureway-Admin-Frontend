@@ -1,34 +1,15 @@
+import { formatCurrency } from "@/helpers/formatAmount";
+import { topProductsType } from "@/utils/type";
 import Image from "next/image";
+import React from "react";
+
+interface Props {
+  topProducts: topProductsType[];
+}
 
 const tableHeaders = ["Name", "Price", "Units Sold"];
-const tableBody = [
-  {
-    name: "Jagarnath S.",
-    date: "24.05.2023",
-    units: "204",
-    image: "/product.svg",
-  },
-  {
-    name: "Jagarnath S.",
-    date: "24.05.2023",
-    units: "204",
-    image: "/product.svg",
-  },
-  {
-    name: "Jagarnath S.",
-    date: "24.05.2023",
-    units: "204",
-    image: "/product.svg",
-  },
-  {
-    name: "Jagarnath S.",
-    date: "24.05.2023",
-    units: "204",
-    image: "/product.svg",
-  },
-];
 
-const DashboardTopProducts = () => {
+const DashboardTopProducts: React.FC<Props> = ({ topProducts }) => {
   return (
     <div className="rounded-lg bg-white p-6 flex-1  flex flex-col box-shadow2 font-sans">
       <h2 className="font-sans font-bold text-xl mb-5">
@@ -51,31 +32,24 @@ const DashboardTopProducts = () => {
       </div>
 
       <div>
-        {tableBody.map((data, i) => {
+        {topProducts.map((data, i) => {
           return (
             <div
               key={i}
               className={`flex items-center ${
-                i < tableBody?.length - 1 && "border-b-1 border-b-[#E6E9F4]"
+                i < topProducts?.length - 1 && "border-b-1 border-b-[#E6E9F4]"
               }`}
             >
               <span className="flex-3 flex items-center py-2.5 gap-3">
-                <Image
-                  src={data?.image}
-                  alt={data?.name}
-                  width={36}
-                  height={36}
-                  className="rounded-md"
-                />
                 <span className="font-sans font-medium text-sm text-black ">
                   {data?.name}
                 </span>
               </span>
               <span className="flex-1 font-sans font-regular text-sm text-black py-2.5">
-                {data?.date}
+                ₦{formatCurrency(data?.price)}
               </span>
               <span className="flex-1 font-sans font-regular text-sm text-black py-2.5">
-                {data?.units}
+                {data?.orderCount}
               </span>
             </div>
           );

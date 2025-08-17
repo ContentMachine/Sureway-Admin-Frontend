@@ -10,6 +10,7 @@ interface Props extends HTMLAttributes<HTMLDivElement> {
   image: string;
   name: string;
   onDelete?: (id: string) => void;
+  onEdit: () => void;
 }
 
 const CategoryProduct: React.FC<Props> = ({
@@ -17,6 +18,7 @@ const CategoryProduct: React.FC<Props> = ({
   name,
   className,
   onDelete,
+  onEdit,
 }) => {
   return (
     <>
@@ -28,11 +30,11 @@ const CategoryProduct: React.FC<Props> = ({
           alt={name}
           width={48}
           height={48}
-          className="rounded-sm"
+          className="rounded-sm w-12 h-12"
         />
         <span className="text-black text-sm font-medium ">{name}</span>
         <div className="group-hover:flex hidden items-center gap-3 ml-auto ">
-          <PencilLine size={18} className="cursor-pointer" />
+          <PencilLine size={18} className="cursor-pointer" onClick={onEdit} />
           <Trash2
             size={18}
             className="cursor-pointer"

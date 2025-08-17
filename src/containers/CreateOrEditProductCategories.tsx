@@ -14,6 +14,8 @@ import LoaderComponent from "@/components/Loader";
 import NoData from "@/components/NoData";
 import { useRouter } from "next/navigation";
 import { ROUTES } from "@/utils/routes";
+import Input from "@/components/Input";
+import { inputChangeHandler } from "@/helpers/inputChangeHandler";
 
 interface Props {
   data: productType;
@@ -22,12 +24,7 @@ interface Props {
   setImages: Dispatch<SetStateAction<File[]>>;
 }
 
-const CreateOrEditProductCategories: React.FC<Props> = ({
-  data,
-  setData,
-  images,
-  setImages,
-}) => {
+const CreateOrEditProductCategories: React.FC<Props> = ({ data, setData }) => {
   // utils
   const [categories, setCategories] = useState<categoryType[]>([]);
   const [subCategories, setSubCategories] = useState<subCategoryType[]>([]);
@@ -37,8 +34,8 @@ const CreateOrEditProductCategories: React.FC<Props> = ({
 
   // Memos
   const activeCategory = useMemo(() => {
-    return categories?.find((data) => data?.isActive);
-  }, [categories]);
+    return categories?.find((category) => category?._id === data?.category);
+  }, [categories, data]);
 
   const activeSubCategory = useMemo(() => {
     return subCategories?.find((data) => data?.isActive);
@@ -97,17 +94,20 @@ const CreateOrEditProductCategories: React.FC<Props> = ({
           {isLoading ? (
             <LoaderComponent />
           ) : (
-            categories?.map((data, i) => {
+            categories?.map((category, i) => {
               return (
                 <div className="flex items-center gap-3 mb-3">
                   <Checkbox
-                    checked={data?.isActive as boolean}
-                    onChange={() =>
-                      activeTogglerRestAll(i, categories, setCategories)
-                    }
+                    checked={category?._id === data?.category}
+                    onChange={() => {
+                      setData((prevState) => ({
+                        ...prevState,
+                        category: category?._id,
+                      }));
+                    }}
                   />
                   <span className="font-sans text-black text-main font-medium">
-                    {data?.name}
+                    {category?.name}
                   </span>
                 </div>
               );
@@ -136,22 +136,40 @@ const CreateOrEditProductCategories: React.FC<Props> = ({
               No sub-categories available for the selected category
             </NoData>
           ) : (
-            subCategories?.map((data, i) => {
+            subCategories?.map((subcategory) => {
               return (
                 <div className="flex items-center gap-3 mb-3">
                   <Checkbox
-                    checked={data?.isActive as boolean}
+                    checked={subcategory?._id === data?.subCategory}
                     onChange={() =>
-                      activeTogglerRestAll(i, subCategories, setSubCategories)
+                      setData((prevState) => ({
+                        ...prevState,
+                        subCategory: subcategory?._id,
+                      }))
                     }
                   />
                   <span className="font-sans text-black text-main font-medium">
-                    {data?.name}
+                    {subcategory?.name}
                   </span>
                 </div>
               );
             })
           )}
+        </div>
+      </div>
+
+      <div className="bg-white p-7 rounded-md">
+        <h2 className="mb-6 text-black-600 text-xl font-bold ">
+          Product Quantity
+        </h2>
+        <div>
+          <Input
+            label="Quantity"
+            type="number"
+            name="quantity"
+            value={String(data?.quantity)}
+            onChange={(e) => inputChangeHandler(e, setData)}
+          />
         </div>
       </div>
     </section>

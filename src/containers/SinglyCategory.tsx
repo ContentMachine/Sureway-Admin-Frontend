@@ -9,7 +9,7 @@ import SinglyCategoryName from "./SinglyCategoryName";
 import SinglyCategoryProduct from "./SinglyCategoryProduct";
 import { useCategoryById, useCategoryProducts } from "@/hooks/useCategories";
 import LoaderComponent from "@/components/Loader";
-import { categoryType, requestType } from "@/utils/type";
+import { categoryResponseType, categoryType, requestType } from "@/utils/type";
 import { capitalize } from "@mui/material";
 import useRequest from "@/hooks/useRequest";
 import { mutate } from "swr";
@@ -20,7 +20,7 @@ const SinglyCategory = () => {
   const { categoryId } = useParams();
 
   // States
-  const [category, setCategory] = useState<null | categoryType>(null);
+  const [category, setCategory] = useState<null | categoryResponseType>(null);
   const [image, setImage] = useState<File[]>([]);
   const [updateCategoryRequestState, setUpdatectegoryRequestState] =
     useState<requestType>({ isLoading: false, error: null, data: null });
@@ -64,8 +64,12 @@ const SinglyCategory = () => {
     const formDataState = new FormData();
 
     formDataState.append("name", category?.name as string);
+    formDataState.append("description", category?.description as string);
+
     if (image.length > 0) {
-      formDataState.append("image", image[0]);
+      image.forEach((data) => {
+        return formDataState.append("images", data);
+      });
     }
 
     setCategoryUpdateFormData(formDataState);
@@ -84,7 +88,7 @@ const SinglyCategory = () => {
             color="#909090"
             onClick={() => router.back()}
           />
-          <Title>{capitalize(category?.name as string)}</Title>
+          <Title>{capitalize((category?.name as string) || "Category")}</Title>
         </div>
       </div>
 

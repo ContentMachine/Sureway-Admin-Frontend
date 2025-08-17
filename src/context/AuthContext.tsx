@@ -46,7 +46,7 @@ const AuthContextProvider = ({ children }: AuthContextProviderType) => {
       state: requestState,
       setState: setRequestState,
       successFunction(res) {
-        setUser(res?.data?.user);
+        setUser(res?.data);
       },
       errorFunction(err) {
         if (typeof window !== "undefined") {

@@ -1,36 +1,46 @@
-import Dropdown from "@/components/Dropdown";
 import Input from "@/components/Input";
+import { inputChangeHandler } from "@/helpers/inputChangeHandler";
 import { OrderType, ProductType } from "@/utils/type";
-import { PencilLine, Trash2 } from "lucide-react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { Dispatch, SetStateAction, useEffect } from "react";
 
 interface Props {
   products: ProductType[] & OrderType[];
+  search: string;
+  setSearch: Dispatch<SetStateAction<string>>;
 }
 
-const SearchAndFilter: React.FC<Props> = ({ products }) => {
-  const oneIsSelected = products?.filter((data) => data?.isActive).length === 1;
-  const selectedItems = products?.filter((data) => data?.isActive);
+const SearchAndFilter: React.FC<Props> = ({ products, search, setSearch }) => {
+  // Router
+  const searchParams = useSearchParams();
+  const router = useRouter();
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      const params = new URLSearchParams(searchParams.toString());
+
+      // Handle search param
+      if (search) {
+        params.set("search", search);
+      } else {
+        params.delete("search");
+      }
+
+      router.push(`?${params.toString()}`);
+    }, 500);
+
+    return () => clearTimeout(timeout);
+  }, [search, router, searchParams]);
 
   return (
     <div className="flex items-center gap-3">
-      <Dropdown options={["Trouser"]} label="Filter" />
-      <Input placeholder="Search" label="Search" />
-
-      <div
-        className={`border-2 w-10 h-10 items-center flex justify-center rounded-sm borcer-1 border-gray-700 ml-auto transition-all duration-200 ease-in-out ${
-          oneIsSelected ? "visible" : "invisible"
-        }`}
-      >
-        <PencilLine color="#003f6b" size={20} />
-      </div>
-
-      <div
-        className={`border-2 w-10 h-10 flex items-center justify-center rounded-sm borcer-1 border-gray-700 transition-all duration-200 ease-in-out
-      ${selectedItems?.length ? "visible" : "invisible"}
-      `}
-      >
-        <Trash2 color="#003f6b" size={20} />
-      </div>
+      <Input
+        placeholder="Search by user email"
+        label="Search"
+        value={search}
+        onChange={(e) => inputChangeHandler(e, setSearch, true)}
+        className="min-w-[300px]"
+      />
     </div>
   );
 };

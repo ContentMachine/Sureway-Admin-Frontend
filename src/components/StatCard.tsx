@@ -4,7 +4,7 @@ interface StatCardProps {
   amount: string | number;
   label: string;
   icon: React.ReactNode;
-  percentage: number;
+  percentage?: number;
 }
 
 const StatCard: React.FC<StatCardProps> = ({
@@ -13,25 +13,27 @@ const StatCard: React.FC<StatCardProps> = ({
   icon,
   percentage,
 }) => {
-  const isPositive = percentage >= 0;
+  const isPositive = (percentage as number) >= 0;
 
   return (
-    <div className="flex items-center gap-9 justify-between bg-white rounded-sm py-4 px-8 box-shadow-2 w-full max-w-1/4">
+    <div className="flex items-center gap-9 justify-between bg-white rounded-sm py-8 px-4 box-shadow-2 w-full max-w-[20%]">
       <div>
         <p className="text-base font-bold text-black font-sans">{amount}</p>
         <p className="text-xs text-gray-600 font-medium font-sans">{label}</p>
-        <div
-          className={`mt-2 text-xs font-medium flex items-center gap-1 ${
-            isPositive ? "text-green-500" : "text-red-500"
-          }`}
-        >
-          {isPositive ? (
-            <ChevronUp size={16} className="color-green-300" />
-          ) : (
-            <ChevronDown className="color-red-500" size={12} />
-          )}
-          {Math.abs(percentage).toFixed(2)}%
-        </div>
+        {percentage && (
+          <div
+            className={`mt-2 text-xs font-medium flex items-center gap-1 ${
+              isPositive ? "text-green-500" : "text-red-500"
+            }`}
+          >
+            {isPositive ? (
+              <ChevronUp size={16} className="color-green-300" />
+            ) : (
+              <ChevronDown className="color-red-500" size={12} />
+            )}
+            {Math.abs(percentage).toFixed(2)}%
+          </div>
+        )}
       </div>
 
       {/* Right: Icon */}
