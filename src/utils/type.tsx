@@ -75,7 +75,7 @@ export type productType = {
 };
 
 export type productResponseType = {
-  coupons: null | string[];
+  coupons: null | couponResponseType[];
   createdAt: string;
   description: string;
   discount: number;
@@ -160,7 +160,7 @@ export type couponType = {
   maxUses: number;
   validFrom: string;
   validUntil: string;
-  isActive: boolean;
+  isActive?: boolean;
   active?: boolean;
 };
 

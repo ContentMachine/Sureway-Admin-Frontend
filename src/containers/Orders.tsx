@@ -13,65 +13,6 @@ import { FolderOutput } from "lucide-react";
 import React, { useEffect } from "react";
 import { useState } from "react";
 
-const tableData = [
-  {
-    id: "Men Grey Hoodie",
-    date: "May 5, 4:20 PM",
-    customerName: "Tom Anderson",
-    paymentStatus: "Paid",
-    orderSttus: "Ready",
-    total: 49.0,
-  },
-  {
-    id: "Men Grey Hoodie",
-    date: "May 5, 4:20 PM",
-    customerName: "Tom Anderson",
-    paymentStatus: "Pending",
-    orderSttus: "Ready",
-    total: 49.0,
-  },
-  {
-    id: "Men Grey Hoodie",
-    date: "May 5, 4:20 PM",
-    customerName: "Tom Anderson",
-    paymentStatus: "Failed",
-    orderSttus: "Ready",
-    total: 49.0,
-  },
-  {
-    id: "Men Grey Hoodie",
-    date: "May 5, 4:20 PM",
-    customerName: "Tom Anderson",
-    paymentStatus: "Paid",
-    orderSttus: "Delivered",
-    total: 49.0,
-  },
-  {
-    id: "Men Grey Hoodie",
-    date: "May 5, 4:20 PM",
-    customerName: "Tom Anderson",
-    paymentStatus: "Paid",
-    orderSttus: "Processing",
-    total: 49.0,
-  },
-  {
-    id: "Men Grey Hoodie",
-    date: "May 5, 4:20 PM",
-    customerName: "Tom Anderson",
-    paymentStatus: "Paid",
-    orderSttus: "Failed",
-    total: 49.0,
-  },
-  {
-    id: "Men Grey Hoodie",
-    date: "May 5, 4:20 PM",
-    customerName: "Tom Anderson",
-    paymentStatus: "Paid",
-    orderSttus: "Ready",
-    total: 49.0,
-  },
-];
-
 const Orders = () => {
   // States
   const [orderState, setOrderState] = useState<orderResponseType[]>([]);

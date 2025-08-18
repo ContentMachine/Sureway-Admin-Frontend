@@ -10,6 +10,8 @@ import { ChevronLeft, PackageCheck } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import SinglyCouponInformation from "./SinglyCouponInformation";
+import moment from "moment";
+import { mutate } from "swr";
 
 interface Props {
   isEdit?: boolean;
@@ -40,30 +42,42 @@ const SinglyCoupon: React.FC<Props> = ({ isEdit }) => {
     error: null,
   });
 
-  console.log(coupon, "Coupon");
-
   //   Requests
   const createCoupon = () => {
-    requestHandler({
-      url: "/coupon",
-      method: "POST",
-      data: coupon,
-      state: requestState,
-      setState: setRequestState,
-      successMessage: "Coupon created successfully",
-      successFunction() {
-        setCoupon({
-          name: "",
-          code: "",
-          discountType: "percentage",
-          discountValue: 0,
-          maxUses: 0,
-          validFrom: "",
-          validUntil: "",
-          active: false,
-        });
-      },
-    });
+    if (couponId) {
+      requestHandler({
+        url: `/coupon/${couponId}`,
+        method: "PUT",
+        data: coupon,
+        state: requestState,
+        setState: setRequestState,
+        successMessage: "Coupon updated successfully",
+        successFunction() {
+          mutate(`/coupon/${couponId}`);
+        },
+      });
+    } else {
+      requestHandler({
+        url: "/coupon",
+        method: "POST",
+        data: coupon,
+        state: requestState,
+        setState: setRequestState,
+        successMessage: "Coupon created successfully",
+        successFunction() {
+          setCoupon({
+            name: "",
+            code: "",
+            discountType: "percentage",
+            discountValue: 0,
+            maxUses: 0,
+            validFrom: "",
+            validUntil: "",
+            active: false,
+          });
+        },
+      });
+    }
   };
   const { isLoading, data: couponData } = useCouponById(couponId as string);
 
@@ -87,8 +101,8 @@ const SinglyCoupon: React.FC<Props> = ({ isEdit }) => {
         discountType,
         discountValue,
         maxUses,
-        validFrom,
-        validUntil,
+        validFrom: moment(validFrom).format("YYYY-MM-DD"),
+        validUntil: moment(validUntil).format("YYYY-MM-DD"),
         active,
       });
     }
@@ -103,7 +117,9 @@ const SinglyCoupon: React.FC<Props> = ({ isEdit }) => {
             color="#909090"
             onClick={() => router.back()}
           />
-          <Title>Edit Coupon</Title>
+          <Title>
+            {couponId ? `Edit ${coupon?.name || "coupon"}` : "Add Coupon"}{" "}
+          </Title>
         </div>
       </div>
 

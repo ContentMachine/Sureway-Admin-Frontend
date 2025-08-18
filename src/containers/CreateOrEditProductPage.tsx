@@ -42,7 +42,7 @@ const CreateOrEditProductPage = () => {
         hasTax: data?.data?.hasTax,
         category: data?.data?.category?._id,
         subCategory: data?.data?.subCategory,
-        coupons: data?.data?.coupon,
+        coupons: data?.data?.coupons?.map((c: any) => c._id),
         quantity: data?.data?.quantity,
       });
       setImages(data?.data?.images);

@@ -86,9 +86,7 @@ const SinglyCouponInformation: React.FC<Props> = ({ coupon, setCoupon }) => {
       </div>
 
       <hr className="border-0.5 border-[#ebebeb] my-4" />
-      <h2 className="mb-0 text-black-600 text-xl font-bold mb-4">
-        Coupon Value
-      </h2>
+      <h2 className="text-black-600 text-xl font-bold mb-4">Coupon Value</h2>
       <div className="flex items-center gap-6">
         <Input
           label="Discount Value"
@@ -101,9 +99,7 @@ const SinglyCouponInformation: React.FC<Props> = ({ coupon, setCoupon }) => {
       </div>
 
       <hr className="border-0.5 border-[#ebebeb] my-4" />
-      <h2 className="mb-0 text-black-600 text-xl font-bold mb-4">
-        Coupon Duration
-      </h2>
+      <h2 className="text-black-600 text-xl font-bold mb-4">Coupon Duration</h2>
       <div className="flex items-center gap-6">
         <Input
           label="Start Date"
@@ -124,9 +120,7 @@ const SinglyCouponInformation: React.FC<Props> = ({ coupon, setCoupon }) => {
       </div>
 
       <hr className="border-0.5 border-[#ebebeb] my-4" />
-      <h2 className="mb-0 text-black-600 text-xl font-bold mb-4">
-        Coupon Limit
-      </h2>
+      <h2 className="-black-600 text-xl font-bold mb-4">Coupon Limit</h2>
 
       <Input
         label="Usage Limit"

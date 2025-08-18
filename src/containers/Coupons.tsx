@@ -11,6 +11,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import CouponSearch from "./CouponSearch";
 import CouponsTable from "./CouponsTable";
+import useUpdateSearchParams from "@/hooks/useUpdateSearchParams";
 
 const Coupons = () => {
   // Router
@@ -19,8 +20,12 @@ const Coupons = () => {
   //   States
   const [coupons, setCoupons] = useState<couponResponseType[]>([]);
 
+  // Hooks
+  const { updateSearchParams } = useUpdateSearchParams();
+  const search = updateSearchParams("search", undefined, "get");
+
   // Requests
-  const { isLoading, data } = useCoupons();
+  const { isLoading, data } = useCoupons({ search: search as string });
 
   //   Effects
   useEffect(() => {
@@ -43,7 +48,7 @@ const Coupons = () => {
           className="ml-auto"
         >
           <Plus size={16} />
-          <span>Coupons</span>
+          <span> Create Coupon</span>
         </Button>
       </div>
 

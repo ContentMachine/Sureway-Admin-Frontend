@@ -13,7 +13,7 @@ interface Props {
   setCoupons: Dispatch<SetStateAction<couponResponseType[]>>;
 }
 
-const tableHeader = ["Coupon Name", "Usage", "Status", "Coupon Type"];
+const tableHeader = ["Coupon Name", "Usage", "End Date", "Coupon Type"];
 
 const CouponsTable: React.FC<Props> = ({ coupons, setCoupons }) => {
   // Router
