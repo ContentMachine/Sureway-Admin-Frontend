@@ -151,3 +151,32 @@ export type topProductsType = {
   productId: string;
   totalUnits: number;
 };
+
+export type couponType = {
+  name: string;
+  code: string;
+  discountType: string;
+  discountValue: number;
+  maxUses: number;
+  validFrom: string;
+  validUntil: string;
+  isActive: boolean;
+  active?: boolean;
+};
+
+export type couponResponseType = {
+  code: string;
+  createdAt: string;
+  discountType: string;
+  discountValue: number;
+  active: boolean;
+  maxUses: number;
+  name: string;
+  updatedAt: string;
+  usedCount: number;
+  validFrom: string;
+  validUntil: string;
+  __v: number;
+  _id: string;
+  isActive?: boolean;
+};

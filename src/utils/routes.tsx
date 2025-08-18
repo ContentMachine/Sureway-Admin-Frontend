@@ -18,6 +18,7 @@ export const ROUTES = Object.freeze({
   PRODUCTS: "/products",
   CREATE_PRODUCT: "/products/create",
   CREATE_CATEGORY: "/categories/create",
+  CREATE_COUPONS: "/coupons/create",
 });
 
 export const navRoutes = [
@@ -54,7 +55,7 @@ export const navRoutes = [
     route: ROUTES.COUPONS,
     properties: ["isSideNav"],
     icon: <Star />,
-    isActive: false,
+    isActive: true,
   },
   {
     title: "Tickets",

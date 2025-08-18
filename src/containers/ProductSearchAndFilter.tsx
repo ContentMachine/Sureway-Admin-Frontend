@@ -2,7 +2,6 @@ import Dropdown from "@/components/Dropdown";
 import Input from "@/components/Input";
 import { inputChangeHandler } from "@/helpers/inputChangeHandler";
 import { useCategories } from "@/hooks/useCategories";
-import useUpdateSearchParams from "@/hooks/useUpdateSearchParams";
 import { ROUTES } from "@/utils/routes";
 import { categoryType, productResponseType, productType } from "@/utils/type";
 import { Loader, PencilLine, Trash2 } from "lucide-react";
@@ -32,7 +31,6 @@ const ProductSearchAndFilter: React.FC<Props> = ({
 
   // Hooks
   const { isLoading, data } = useCategories();
-  const { updateSearchParams } = useUpdateSearchParams();
 
   // Memo
   const categories: categoryType[] = useMemo(() => data?.data, [data]);
