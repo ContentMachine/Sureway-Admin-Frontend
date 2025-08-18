@@ -28,7 +28,7 @@ const Orders = () => {
   const { isLoading, data } = useOrders({
     page,
     search: searchQuery as string,
-    pageLimit: 20,
+    pageLimit: 10,
   });
 
   // Effects
