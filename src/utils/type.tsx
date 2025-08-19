@@ -75,7 +75,7 @@ export type productType = {
 };
 
 export type productResponseType = {
-  coupons: null | string[];
+  coupons: null | couponResponseType[];
   createdAt: string;
   description: string;
   discount: number;

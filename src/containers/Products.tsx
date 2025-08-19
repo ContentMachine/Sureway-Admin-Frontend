@@ -40,8 +40,8 @@ const Products = () => {
   const params = {
     search: search as string,
     category: filter as string,
-    page: 1,
-    limit: 20,
+    page: page,
+    limit: 10,
   };
 
   // Requests

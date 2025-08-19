@@ -6,11 +6,20 @@ import TextArea from "@/components/Textarea";
 import { TextareaWithOptions } from "@/components/TextareaWithOptions";
 import Toggle from "@/components/Toggle";
 import { inputChangeHandler } from "@/helpers/inputChangeHandler";
+import { useCoupons } from "@/hooks/useCoupons";
 import { STATES } from "@/utils/constants";
-import { productType } from "@/utils/type";
-import { Trash2 } from "lucide-react";
+import { ROUTES } from "@/utils/routes";
+import { couponResponseType, productType } from "@/utils/type";
+import { Trash2, X } from "lucide-react";
 import Image from "next/image";
-import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import React, {
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 
 interface Props {
   data: productType;
@@ -28,11 +37,35 @@ const CreateOrEditProductInformation: React.FC<Props> = ({
   // States
   const [addTax, setAddTaxTax] = useState(false);
   const [showImageFiles, setShowImageFiles] = useState(false);
+  const [selectedCoupon, setSelectedCpupon] = useState("");
+
+  // Requests
+  const { isLoading, data: couponData } = useCoupons({});
+
+  // Router
+  const router = useRouter();
+
+  // Memos
+  const coupons: couponResponseType[] = useMemo(() => {
+    return couponData?.data;
+  }, [couponData]);
+  const activeCoupon: couponResponseType | undefined = useMemo(() => {
+    return coupons?.find((coupon) => coupon?.name === selectedCoupon);
+  }, [selectedCoupon]);
 
   // Effects
   useEffect(() => {
     setData((prevState) => ({ ...prevState, hasTax: addTax }));
-  }, [addTax]);
+
+    if (activeCoupon && !data?.coupons?.includes(activeCoupon?._id)) {
+      setData((prevState) => ({
+        ...prevState,
+        coupons: prevState?.coupons?.length
+          ? [...prevState?.coupons, activeCoupon?._id]
+          : [activeCoupon?._id],
+      }));
+    }
+  }, [addTax, selectedCoupon]);
 
   return (
     <section className="basis-[70%] bg-white p-7 rounded-md font-sans">
@@ -135,14 +168,55 @@ const CreateOrEditProductInformation: React.FC<Props> = ({
         <hr className="border-0.5 border-[#ebebeb]" />
         <h2 className="mb-0 text-black-600 text-xl font-bold ">Coupons</h2>
         <div>
-          <Dropdown label="Select Coupon Code" options={["TOBE"]} />
+          <Dropdown
+            label="Select Coupon Code"
+            options={
+              coupons?.length > 0 ? coupons?.map((data) => data?.name) : []
+            }
+            isLoading={isLoading}
+            selected={selectedCoupon}
+            setSelected={setSelectedCpupon}
+          />
 
           <p className="text-gray-600 text-xs font-medium mt-2">
             Coupons already come with a discount, therefore discounts and coupon
             codes cannot go hand in hand
           </p>
 
-          <Button type="null" className="px-0">
+          <div className="flex items-center gap-2 mt-4 flex-wrap">
+            {data?.coupons?.map((coupon) => {
+              const couponInfo = coupons?.find((find) => find?._id === coupon);
+              return (
+                <div
+                  className="border-2 flex items-center gap-2 px-4 py-2 text-sm text-blue-200 bg-white rounded-sm"
+                  key={coupon}
+                >
+                  <span>{couponInfo?.name}</span>
+                  <X
+                    size={16}
+                    className="cursor-pointer"
+                    onClick={() => {
+                      const filteredCoupons =
+                        data?.coupons?.length &&
+                        data?.coupons?.filter((filter) => filter !== coupon);
+                      setData((prevState) => ({
+                        ...prevState,
+                        coupons: filteredCoupons as string[],
+                      }));
+                    }}
+                  />
+                </div>
+              );
+            })}
+          </div>
+
+          <Button
+            type="null"
+            className="px-0"
+            onClick={() => {
+              router.push(ROUTES.CREATE_COUPONS);
+            }}
+          >
             Create new
           </Button>
         </div>
