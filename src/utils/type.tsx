@@ -160,7 +160,7 @@ export type couponType = {
   maxUses: number;
   validFrom: string;
   validUntil: string;
-  isActive: boolean;
+  isActive?: boolean;
   active?: boolean;
 };
 
