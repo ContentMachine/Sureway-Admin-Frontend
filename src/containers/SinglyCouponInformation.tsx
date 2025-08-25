@@ -1,6 +1,7 @@
 "use client";
 
 import Input from "@/components/Input";
+import Toggle from "@/components/Toggle";
 import { inputChangeHandler } from "@/helpers/inputChangeHandler";
 import { couponType } from "@/utils/type";
 import { Banknote, Percent } from "lucide-react";
@@ -130,6 +131,28 @@ const SinglyCouponInformation: React.FC<Props> = ({ coupon, setCoupon }) => {
         value={String(coupon?.maxUses)}
         onChange={(e) => inputChangeHandler(e, setCoupon)}
       />
+
+      <hr className="border-0.5 border-[#ebebeb] my-4" />
+      <h2 className="text-black-600 text-xl font-bold mb-4">Coupon Status</h2>
+
+      <div className="flex items-center gap-4">
+        <label
+          htmlFor="active"
+          className="font-sans text-black text-main font-medium"
+        >
+          Toggle Coupon Status
+        </label>
+        <Toggle
+          id="active"
+          checked={coupon?.active as boolean}
+          onChange={() =>
+            setCoupon((prevState) => ({
+              ...prevState,
+              active: !prevState?.active,
+            }))
+          }
+        />
+      </div>
     </section>
   );
 };
