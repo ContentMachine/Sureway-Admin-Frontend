@@ -45,6 +45,8 @@ const Button = ({
             ? "bg-transparent text-blue-200 border-none"
             : type === "bordered"
             ? "border-blue-200 border-1.5 text-white"
+            : type === "delete"
+            ? "bg-red-500 text-white"
             : "bg-blue-200 border-none text-white"
         } ${className} disabled:bg-gray-600 disabled:cursor-not-allowed`
       )}

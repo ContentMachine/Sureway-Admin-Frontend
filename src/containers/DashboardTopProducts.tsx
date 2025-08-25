@@ -32,7 +32,7 @@ const DashboardTopProducts: React.FC<Props> = ({ topProducts }) => {
       </div>
 
       <div>
-        {topProducts.map((data, i) => {
+        {topProducts?.map((data, i) => {
           return (
             <div
               key={i}

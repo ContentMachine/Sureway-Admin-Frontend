@@ -67,8 +67,6 @@ const Products = () => {
     });
   };
 
-  console.log(productData);
-
   // Effects
   useEffect(() => {
     if (productData) {
@@ -122,7 +120,7 @@ const Products = () => {
             setActiveNumberState={setPage}
           />
           <p className="font-sans font-medium text-base text-gray-600">
-            {productsState?.length} results
+            {productData?.data?.total || 0} results
           </p>
         </div>
       </div>

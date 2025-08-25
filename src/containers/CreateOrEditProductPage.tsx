@@ -45,7 +45,6 @@ const CreateOrEditProductPage = () => {
         coupons: data?.data?.coupons?.map((c: any) => c._id),
         quantity: data?.data?.quantity,
       });
-      setImages(data?.data?.images);
     }
   }, [data, productId]);
 

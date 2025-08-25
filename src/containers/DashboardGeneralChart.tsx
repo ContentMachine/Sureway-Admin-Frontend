@@ -19,7 +19,7 @@ import {
 const DashboardGeneralChart: React.FC<Props> = ({ data }) => {
   const date = new Date();
   const month = date.getMonth();
-  const orderThisMonth = data[month].totalOrders;
+  const orderThisMonth = data?.[month]?.totalOrders;
 
   return (
     <div className="rounded-lg bg-white p-6 w-full h-[600px] flex flex-col box-shadow2">
