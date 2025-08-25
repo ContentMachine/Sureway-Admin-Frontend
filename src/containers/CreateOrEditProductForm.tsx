@@ -84,9 +84,7 @@ const CreateOrEditProductForm: React.FC<Props> = ({
     subFormData.append("category", data?.category as string);
     subFormData.append("subCategory", data?.subCategory as string);
     subFormData.append("quantity", String(data?.quantity));
-    data?.coupons?.map((c) => {
-      return subFormData.append("coupons", c);
-    });
+    subFormData.append("coupons", JSON.stringify(data?.coupons ?? []));
 
     if (images.length > 0) {
       images.forEach((image) => {
