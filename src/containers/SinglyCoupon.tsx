@@ -73,7 +73,7 @@ const SinglyCoupon: React.FC<Props> = ({ isEdit }) => {
             maxUses: 0,
             validFrom: "",
             validUntil: "",
-            active: false,
+            active: true,
           });
         },
       });
