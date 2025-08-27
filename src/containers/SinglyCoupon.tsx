@@ -35,6 +35,7 @@ const SinglyCoupon: React.FC<Props> = ({ isEdit }) => {
     validFrom: "",
     validUntil: "",
     active: false,
+    deliveryDiscount: 0,
   });
   const [requestState, setRequestState] = useState<requestType>({
     isLoading: false,
@@ -74,6 +75,7 @@ const SinglyCoupon: React.FC<Props> = ({ isEdit }) => {
             validFrom: "",
             validUntil: "",
             active: true,
+            deliveryDiscount: 0,
           });
         },
       });
@@ -93,6 +95,7 @@ const SinglyCoupon: React.FC<Props> = ({ isEdit }) => {
         validFrom,
         validUntil,
         active,
+        deliveryDiscount,
       } = couponData?.data;
 
       setCoupon({
@@ -104,6 +107,7 @@ const SinglyCoupon: React.FC<Props> = ({ isEdit }) => {
         validFrom: moment(validFrom).format("YYYY-MM-DD"),
         validUntil: moment(validUntil).format("YYYY-MM-DD"),
         active,
+        deliveryDiscount,
       });
     }
   }, [couponData]);

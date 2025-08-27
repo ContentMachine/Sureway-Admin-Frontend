@@ -97,6 +97,15 @@ const SinglyCouponInformation: React.FC<Props> = ({ coupon, setCoupon }) => {
           value={String(coupon?.discountValue)}
           onChange={(e) => inputChangeHandler(e, setCoupon)}
         />
+
+        <Input
+          label="Delivery Discount (in percentage)"
+          type="number"
+          className="w-[50%]"
+          name="deliveryDiscount"
+          value={String(coupon?.deliveryDiscount)}
+          onChange={(e) => inputChangeHandler(e, setCoupon)}
+        />
       </div>
 
       <hr className="border-0.5 border-[#ebebeb] my-4" />

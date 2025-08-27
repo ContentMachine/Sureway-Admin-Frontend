@@ -162,6 +162,7 @@ export type couponType = {
   validUntil: string;
   isActive?: boolean;
   active?: boolean;
+  deliveryDiscount?: number;
 };
 
 export type couponResponseType = {
