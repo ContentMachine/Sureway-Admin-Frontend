@@ -51,6 +51,7 @@ export type categoryType = {
   updatedAt: string;
   _id: string;
   isActive?: boolean;
+  slug: string;
 };
 
 export type subCategoryType = {
@@ -91,6 +92,7 @@ export type productResponseType = {
   _id: string;
   isActive?: boolean;
   category: categoryResponseType;
+  slug: string;
 };
 
 export type categoryResponseType = {

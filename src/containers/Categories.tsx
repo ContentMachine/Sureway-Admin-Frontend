@@ -49,7 +49,7 @@ const Categories = () => {
                 itemCount={data?.productCount}
                 image={data?.images?.[0]}
                 onClick={() => {
-                  router.push(`/categories/${data?._id}`);
+                  router.push(`/categories/${data?.slug}`);
                 }}
               />
             );

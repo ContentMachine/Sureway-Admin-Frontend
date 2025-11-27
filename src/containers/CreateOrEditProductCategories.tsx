@@ -44,9 +44,7 @@ const CreateOrEditProductCategories: React.FC<Props> = ({ data, setData }) => {
   // Request
   const { isLoading, data: categoriesData } = useCategories();
   const { isLoading: singlyCategoryIsLoading, data: singlyCategoryData } =
-    useCategoryById(activeCategory?._id as string);
-
-  console.log(singlyCategoryData, "Test");
+    useCategoryById(activeCategory?.slug as string);
 
   // Effects
   useEffect(() => {

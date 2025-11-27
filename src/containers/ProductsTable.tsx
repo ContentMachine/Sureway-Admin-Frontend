@@ -106,7 +106,7 @@ const ProductsTable: React.FC<Props> = ({
                       <span
                         className="font-medium text-sm text-black hover:underline"
                         onClick={() => {
-                          router.push(`${ROUTES.PRODUCTS}/${data?._id}`);
+                          router.push(`${ROUTES.PRODUCTS}/${data?.slug}`);
                         }}
                       >
                         {data?.name}

@@ -103,7 +103,7 @@ const CreateOrEditProductInformation: React.FC<Props> = ({
           {Array.isArray(images) &&
             !showImageFiles &&
             images?.map((data) => {
-              if (typeof data === "string")
+              if (typeof data === "string") {
                 return (
                   <Image
                     src={data as string}
@@ -111,9 +111,10 @@ const CreateOrEditProductInformation: React.FC<Props> = ({
                     key={data as string}
                     width={120}
                     height={120}
-                    className="w-30 h-30 "
+                    className="w-30 h-30 border-1"
                   />
                 );
+              }
             })}
           {!showImageFiles && (
             <div className="basis-full mt-4">

@@ -60,7 +60,7 @@ const CreateSubCategoryModalBody: React.FC<Props> = ({ onClose }) => {
     });
 
     setFormData(subFormData);
-  }, [createSubCategoryState, images]);
+  }, [createSubCategoryState, images, subCategoryData]);
 
   return (
     <div className="max-w-[550px]">

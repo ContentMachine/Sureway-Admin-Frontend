@@ -79,7 +79,6 @@ const SinglyCategory = () => {
       successMessage: "Category deleted successfully",
       successFunction() {
         mutate(`/category`);
-        mutate(`/category/category/${categoryId}`);
         setChangeImage(false);
         router.push(ROUTES.CATEGORIES);
       },
