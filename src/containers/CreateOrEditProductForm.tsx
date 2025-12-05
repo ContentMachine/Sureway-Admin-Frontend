@@ -52,6 +52,7 @@ const CreateOrEditProductForm: React.FC<Props> = ({
           subCategory: null,
           coupons: [],
           quantity: 0,
+          internationalPrice: 0,
         });
         setImages([]);
       },
@@ -79,6 +80,7 @@ const CreateOrEditProductForm: React.FC<Props> = ({
     subFormData.append("name", data?.name);
     subFormData.append("description", data?.description);
     subFormData.append("price", String(data?.price));
+    subFormData.append("internationalPrice", String(data?.internationalPrice));
     subFormData.append("discount", String(data?.discount));
     subFormData.append("hasTax", String(data?.hasTax));
     subFormData.append("category", data?.category as string);

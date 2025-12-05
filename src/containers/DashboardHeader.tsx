@@ -10,8 +10,6 @@ const DashboardHeader = () => {
   //
   const { user, requestState } = useContext(AuthContext);
 
-  console.log(user, "user");
-
   return (
     <header className="flex items-center bg-blue-300 px-8 h-17 gap-4">
       <Logo />

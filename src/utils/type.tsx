@@ -66,6 +66,7 @@ export type productType = {
   name: string;
   description: string;
   price: number;
+  internationalPrice: number;
   discount: number;
   hasTax: boolean;
   category: null | string;
@@ -182,4 +183,49 @@ export type couponResponseType = {
   __v: number;
   _id: string;
   isActive?: boolean;
+};
+
+export type userLocationtype = {
+  country: string;
+  longitude: number;
+  latitude: number;
+  currency: string;
+  currencySymbol: string;
+  flag: string;
+};
+
+export type countryNameType = {
+  common: string;
+  official: string;
+  nativeName: {
+    eng: {
+      official: string;
+      common: string;
+    };
+  };
+};
+
+export type countryCurrencyType = {
+  name: string;
+  symbol: string;
+};
+
+export type countryFlagType = {
+  alt: string;
+  png: string;
+  svg: string;
+};
+
+export type countryType = {
+  name: countryNameType | string;
+  currencies:
+    | {
+        [symbol: string]: countryCurrencyType;
+      }
+    | string;
+  flag: string;
+  cca3: string;
+  latlng: number[];
+  flags: countryFlagType;
+  slug?: string;
 };

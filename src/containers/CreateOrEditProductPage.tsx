@@ -19,6 +19,7 @@ const CreateOrEditProductPage = () => {
     name: "",
     description: "",
     price: 0,
+    internationalPrice: 0,
     discount: 0,
     hasTax: false,
     category: null,
@@ -44,6 +45,7 @@ const CreateOrEditProductPage = () => {
         subCategory: data?.data?.subCategory,
         coupons: data?.data?.coupons?.map((c: any) => c._id),
         quantity: data?.data?.quantity,
+        internationalPrice: data?.data?.internationalPrice,
       });
     }
   }, [data, productId]);

@@ -145,6 +145,15 @@ const CreateOrEditProductInformation: React.FC<Props> = ({
             value={String(data?.price)}
             onChange={(e) => inputChangeHandler(e, setData)}
           />
+
+          <Input
+            label="Product International Price (in USD)"
+            className="flex-1"
+            type="number"
+            name="internationalPrice"
+            value={String(data?.internationalPrice)}
+            onChange={(e) => inputChangeHandler(e, setData)}
+          />
           <Input
             label="Discount Price in percentage"
             className="flex-1"

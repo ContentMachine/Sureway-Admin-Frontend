@@ -156,7 +156,7 @@ const Dropdown = (props: DropdownProps) => {
         </div>
         {isActive && (
           <div
-            className="absolute w-full top-[110%] left-0 box-border z-[2] bg-white min-h-full max-h-[35opx] overflow-y-auto text-left border-none transition-all ease-in-out duration-200 box-shadow2 rounded-md "
+            className="absolute w-full top-[110%] left-0 box-border z-[2] bg-white min-h-full max-h-[350px] overflow-y-auto text-left border-none transition-all ease-in-out duration-200 box-shadow2 rounded-md "
             style={{ maxHeight: props.maxHeight || undefined }}
           >
             {props.options && props.options?.length > 8 && (
@@ -169,7 +169,7 @@ const Dropdown = (props: DropdownProps) => {
                     setKEyPressedValue(e.target.value);
                   }}
                   ref={searchInput}
-                  className="w-full h-full rounded-md text-black font-sans text-xs font-medium"
+                  className="w-full h-full rounded-md text-black font-sans text-sm font-medium p-4"
                 />
               </div>
             )}

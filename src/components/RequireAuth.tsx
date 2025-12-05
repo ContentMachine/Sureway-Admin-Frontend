@@ -23,8 +23,6 @@ const RequireAuth = ({ children }: RequireAuthProps) => {
     typeof window !== "undefined" &&
     localStorage.getItem(LOCAL_STORAGE_AUTH_KEY);
 
-  console.log(requestState, accessToken, "Token");
-
   // Effects
   useEffect(() => {
     if (!requestState?.isLoading && !accessToken) {

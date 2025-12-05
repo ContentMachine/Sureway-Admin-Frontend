@@ -1,5 +1,6 @@
 import {
   ChartBarStacked,
+  Flag,
   House,
   ShoppingBag,
   Star,
@@ -14,11 +15,13 @@ export const ROUTES = Object.freeze({
   ORDERS: "/orders",
   CATEGORIES: "/categories",
   COUPONS: "/coupons",
+  COUNTRIES: "/countries",
   TICKETS: "/tickets",
   PRODUCTS: "/products",
   CREATE_PRODUCT: "/products/create",
   CREATE_CATEGORY: "/categories/create",
   CREATE_COUPONS: "/coupons/create",
+  CREATE_COUNTRY: "/countries/create",
 });
 
 export const navRoutes = [
@@ -55,6 +58,13 @@ export const navRoutes = [
     route: ROUTES.COUPONS,
     properties: ["isSideNav"],
     icon: <Star />,
+    isActive: true,
+  },
+  {
+    title: "Countries",
+    route: ROUTES.COUNTRIES,
+    properties: ["isSideNav"],
+    icon: <Flag />,
     isActive: true,
   },
   {

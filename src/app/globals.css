@@ -195,6 +195,10 @@ body {
   box-shadow: 0px 1px 4px 0px #15223214;
 }
 
+.two-sec-transition {
+  transition: all 0.2s ease-in-out;
+}
+
 /* @layer base {
   * {
     @apply border-border;

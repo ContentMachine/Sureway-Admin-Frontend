@@ -82,8 +82,6 @@ const OrderTable: React.FC<Props> = ({ orders, setOrders }) => {
           const statusIsProcessing = data?.status === "processing";
           const statusIsFailed = data?.status === "failed";
 
-          console.log(data?.status, statusIsDelivered, "dd");
-
           return (
             <div
               key={i}

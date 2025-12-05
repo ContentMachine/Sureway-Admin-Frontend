@@ -42,8 +42,6 @@ const Dashboard = () => {
     return topProductsData?.data;
   }, [topProductsData]);
 
-  console.log(topProductsData, "Data");
-
   return (
     <section className="flex flex-col gap-6">
       <Title>Dashboard</Title>
