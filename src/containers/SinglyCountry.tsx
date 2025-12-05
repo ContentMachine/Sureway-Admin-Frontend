@@ -47,9 +47,7 @@ const SinglyCountry = () => {
             color="#909090"
             onClick={() => router.back()}
           />
-          <Title>
-            {countryId ? `Edit ${"" || "Country"}` : "Onboard a New Country"}
-          </Title>
+          <Title>{countryId ? `Edit Country` : "Onboard a New Country"}</Title>
         </div>
 
         <Button
