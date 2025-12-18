@@ -2,9 +2,7 @@ import { objectGenericType } from "@/utils/type";
 import { Pencil, PencilLine, Trash2 } from "lucide-react";
 import Image from "next/image";
 import React from "react";
-import { useState } from "react";
 import { HTMLAttributes } from "react";
-import Modal from "./Modal";
 
 interface Props extends HTMLAttributes<HTMLDivElement> {
   image: string;
